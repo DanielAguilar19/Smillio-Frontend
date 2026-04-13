@@ -32,3 +32,22 @@ body {
   --primary-800: #1b3063;
   --primary-900: #101f49;
 }
+
+/*  PRIMARY */
+.p-button:not(.p-button-outlined) {
+  background-color: var(--color-primary);
+  border: none;
+  color: white;
+}
+
+/*  HOVER */
+.p-button:not(.p-button-outlined):hover {
+  opacity: 0.9;
+}
+
+/*  OUTLINED */
+.p-button.p-button-outlined {
+  border: 2px solid var(--color-primary);
+  color: var(--color-primary);
+  background: transparent;
+}
