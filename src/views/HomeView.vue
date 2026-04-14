@@ -1,8 +1,3 @@
-<script setup lang="ts">
-import Button from 'primevue/button'
-import Card from 'primevue/card'
-</script>
-
 <template>
   <main class="main-container">
 
@@ -22,7 +17,9 @@ import Card from 'primevue/card'
           <div class="hero-buttons">
             <Button label="Buscar clínicas" icon="pi pi-search" class="btn-primary" />
 
-            <Button label="Soy clínica" outlined class="btn-outline" />
+            <Button label="Soy Odontólogo" outlined class="btn-outline" />
+            <Button @click="RegistroPaciente()" label="Soy Paciente" outlined class="btn-outline" />
+
           </div>
         </div>
 
@@ -99,6 +96,19 @@ import Card from 'primevue/card'
 
   </main>
 </template>
+
+<script setup lang="ts">
+import router from '@/router';
+import Button from 'primevue/button'
+import Card from 'primevue/card'
+
+function RegistroPaciente() {
+  router.push({
+    name: 'registro-paciente'
+  })
+}
+</script>
+
 
 <style>
 .main-container {

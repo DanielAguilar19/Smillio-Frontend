@@ -6,6 +6,8 @@ import PacientesView from '@/views/OdontologoView/O-pacientes.vue'
 import ClinicasView from '@/views/OdontologoView/O-clinicas.vue'
 import PerfilView from '@/views/OdontologoView/O-perfil.vue'
 
+import rutasAuth from './auth/authRoutes'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -46,8 +48,9 @@ const router = createRouter({
       path: '/o-perfil',
       name: 'odontologo-perfil',
       component: PerfilView,
-    }
+    },
 
+    ...rutasAuth,
   ],
 })
 

@@ -205,4 +205,6 @@ body {
 
 .btn-add:hover {
   opacity: 0.5;
+.bg-primary-gradient {
+  background: linear-gradient(135deg, #4f7bcb, #6ea0e6);
 }
