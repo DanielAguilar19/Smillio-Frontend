@@ -51,135 +51,290 @@ body {
   color: var(--color-primary);
   background: transparent;
 }
-.bg-primary-gradient {
-  background: linear-gradient(135deg, #4f7bcb, #6ea0e6);
-}
-/* Gradientes */
-.bg-primary-gradient {
-  background: linear-gradient(135deg, #4f7bcb, #6ea0e6);
+.main-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  background-color: #fff;
+  color: #16529e;
+  overflow: hidden;
 }
 
-/* Cards */
-.p-card {
+.sidebar {
+  width: 270px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  border-right: 1px solid #647591;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.logo-container img {
+  max-width: 200px;
+  height: auto;
+}
+
+.menu-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.menu-items {
+  margin-top: 18%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* HEADER AZUL SUPERIOR */
+.top-header {
+  height: 70px; /* Altura fija del header */
+  background-color: #16529e; /* Tu azul exacto */
+  display: flex;
+  align-items: center;
+  color: white;
+}
+
+.logo-section {
+  width: 270px; /* Debe coincidir con el ancho del sidebar para que se alineen */
+  display: flex;
+  justify-content: center;
+}
+
+.header-logo {
+  max-width: 160px;
+}
+
+.title-section {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.title-section h2 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.h3 {
+  color: #101f49;
+  font-size: 1.75rem;
+  font-weight: 645;
+  line-height: 1.7;
+}
+
+/* CUERPO: Sidebar y Contenido lado a lado */
+.app-body {
+  display: flex;
+  flex-grow: 1;
+  overflow: hidden;
+  background-color: #f8fafc;
+}
+
+/* Estilo para los botones de menú */
+.menu-button {
+  width: calc(100% - 1.5rem) !important;
+  justify-content: flex-start !important;
+  color: #16529e !important; /* PARA EL TEXTO E ICONO */
+  padding: 0.75rem 3rem !important;
+  background: transparent !important;
   border: none !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
-}
-
-.p-card:hover {
-  box-shadow: 0 4px 12px rgba(79, 123, 203, 0.15) !important;
-}
-
-/* Inputs */
-.p-inputtext,
-.p-inputtextarea,
-.p-dropdown,
-.p-calendar .p-datepicker {
-  border: 1px solid var(--primary-200) !important;
-  border-radius: 0.375rem !important;
-}
-
-.p-inputtext:focus,
-.p-inputtextarea:focus,
-.p-dropdown:focus,
-.p-calendar .p-datepicker:focus {
-  border-color: var(--primary-400) !important;
-  box-shadow: 0 0 0 0.2rem var(--primary-50) !important;
-  outline: none !important;
-}
-
-/* Checkboxes */
-.p-checkbox .p-checkbox-box {
-  border: 2px solid var(--primary-200) !important;
-  border-radius: 0.25rem !important;
-}
-
-.p-checkbox .p-checkbox-box.p-highlight {
-  background-color: var(--primary-600) !important;
-  border-color: var(--primary-600) !important;
-}
-
-/* Messages */
-.p-message {
-  border-radius: 0.375rem !important;
-  border: none !important;
-}
-
-.p-message-success {
-  background-color: #f0fdf4 !important;
-  color: #15803d !important;
-}
-
-.p-message-error {
-  background-color: #fef2f2 !important;
-  color: #991b1b !important;
-}
-
-.p-message-warning {
-  background-color: #fffbeb !important;
-  color: #92400e !important;
-}
-
-.p-message-info {
-  background-color: #f0f9ff !important;
-  color: #0c4a6e !important;
-}
-
-/* Tags */
-.p-tag {
-  border-radius: 999px !important;
-}
-
-.p-tag.p-tag-success {
-  background-color: #dcfce7 !important;
-  color: #166534 !important;
-}
-
-/* Progress Spinner */
-.p-progress-spinner {
-  color: var(--primary-600);
-}
-
-/* Paginator */
-.p-paginator {
-  background-color: var(--primary-50) !important;
-  border: 1px solid var(--primary-100) !important;
-  border-radius: 0.375rem !important;
-  padding: 1rem !important;
-}
-
-.p-paginator .p-paginator-element:hover {
-  background-color: var(--primary-100) !important;
-  color: var(--primary-600) !important;
-}
-
-/* Dialog */
-.p-dialog .p-dialog-header {
-  background-color: var(--primary-50) !important;
-  border-bottom: 2px solid var(--primary-200) !important;
-  padding: 1.5rem !important;
-}
-
-.p-dialog .p-dialog-header .p-dialog-title {
-  color: var(--primary-600) !important;
+  border-radius: 0 !important;
   font-weight: 600 !important;
+  font-size: 1.1rem !important;
+  transition: all 0.2s;
 }
 
-/* Transiciones suaves */
-* {
-  transition:
-    color 150ms ease,
-    background-color 150ms ease,
-    border-color 150ms ease,
-    box-shadow 150ms ease;
+/* Espacio entre icono y texto */
+.menu-button .p-button-icon {
+  color: #16529e !important; /* Color del icono */
+  margin-right: 1.25rem !important;
+  font-size: 1.4rem !important;
 }
 
-button,
-a {
-  transition: all 200ms ease;
+/* Efecto Hover */
+.menu-button:hover {
+  background: rgba(22, 82, 158, 0.1) !important;
+  color: #16529e !important;
+  border-radius: 8px !important;
+  width: 90% !important;
+  margin-left: 5% !important;
 }
 
-/* Accesibilidad */
-:focus-visible {
-  outline: 2px solid var(--primary-600) !important;
-  outline-offset: 2px !important;
+/* Estilo para el link ACTIVO (Home/Dashboard en tu imagen) */
+.active-link {
+  position: relative;
+
+  background: transparent !important;
+}
+
+/* El indicador de borde izquierdo como en Figma */
+.active-link:before {
+  content: '';
+  position: absolute;
+  left: -1.5rem;
+  top: 0;
+  height: 100%;
+  width: 6px;
+  background-color: #16529e;
+  border-radius: 0 4px 4px 0;
+}
+
+.main-content {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.btn-add {
+  color: white;
+  border: none;
+  padding: 0.5rem 0.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+  display: flex;
+}
+
+.btn-add:hover {
+  opacity: 0.5;
+  .bg-primary-gradient {
+    background: linear-gradient(135deg, #4f7bcb, #6ea0e6);
+  }
+  /* Gradientes */
+  .bg-primary-gradient {
+    background: linear-gradient(135deg, #4f7bcb, #6ea0e6);
+  }
+
+  /* Cards */
+  .p-card {
+    border: none !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  .p-card:hover {
+    box-shadow: 0 4px 12px rgba(79, 123, 203, 0.15) !important;
+  }
+
+  /* Inputs */
+  .p-inputtext,
+  .p-inputtextarea,
+  .p-dropdown,
+  .p-calendar .p-datepicker {
+    border: 1px solid var(--primary-200) !important;
+    border-radius: 0.375rem !important;
+  }
+
+  .p-inputtext:focus,
+  .p-inputtextarea:focus,
+  .p-dropdown:focus,
+  .p-calendar .p-datepicker:focus {
+    border-color: var(--primary-400) !important;
+    box-shadow: 0 0 0 0.2rem var(--primary-50) !important;
+    outline: none !important;
+  }
+
+  /* Checkboxes */
+  .p-checkbox .p-checkbox-box {
+    border: 2px solid var(--primary-200) !important;
+    border-radius: 0.25rem !important;
+  }
+
+  .p-checkbox .p-checkbox-box.p-highlight {
+    background-color: var(--primary-600) !important;
+    border-color: var(--primary-600) !important;
+  }
+
+  /* Messages */
+  .p-message {
+    border-radius: 0.375rem !important;
+    border: none !important;
+  }
+
+  .p-message-success {
+    background-color: #f0fdf4 !important;
+    color: #15803d !important;
+  }
+
+  .p-message-error {
+    background-color: #fef2f2 !important;
+    color: #991b1b !important;
+  }
+
+  .p-message-warning {
+    background-color: #fffbeb !important;
+    color: #92400e !important;
+  }
+
+  .p-message-info {
+    background-color: #f0f9ff !important;
+    color: #0c4a6e !important;
+  }
+
+  /* Tags */
+  .p-tag {
+    border-radius: 999px !important;
+  }
+
+  .p-tag.p-tag-success {
+    background-color: #dcfce7 !important;
+    color: #166534 !important;
+  }
+
+  /* Progress Spinner */
+  .p-progress-spinner {
+    color: var(--primary-600);
+  }
+
+  /* Paginator */
+  .p-paginator {
+    background-color: var(--primary-50) !important;
+    border: 1px solid var(--primary-100) !important;
+    border-radius: 0.375rem !important;
+    padding: 1rem !important;
+  }
+
+  .p-paginator .p-paginator-element:hover {
+    background-color: var(--primary-100) !important;
+    color: var(--primary-600) !important;
+  }
+
+  /* Dialog */
+  .p-dialog .p-dialog-header {
+    background-color: var(--primary-50) !important;
+    border-bottom: 2px solid var(--primary-200) !important;
+    padding: 1.5rem !important;
+  }
+
+  .p-dialog .p-dialog-header .p-dialog-title {
+    color: var(--primary-600) !important;
+    font-weight: 600 !important;
+  }
+
+  /* Transiciones suaves */
+  * {
+    transition:
+      color 150ms ease,
+      background-color 150ms ease,
+      border-color 150ms ease,
+      box-shadow 150ms ease;
+  }
+
+  button,
+  a {
+    transition: all 200ms ease;
+  }
+
+  /* Accesibilidad */
+  :focus-visible {
+    outline: 2px solid var(--primary-600) !important;
+    outline-offset: 2px !important;
+  }
 }

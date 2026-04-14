@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import rutasOdontologo from './auth/odontologoRoutes'
 
 import rutasAuth from './auth/authRoutes'
 
@@ -20,6 +21,7 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue'),
     },
     ...rutasAuth,
+    ...rutasOdontologo,
   ],
 })
 
