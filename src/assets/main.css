@@ -51,3 +51,136 @@ body {
   color: var(--color-primary);
   background: transparent;
 }
+.main-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  background-color: #fff; 
+  color: #16529E;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 270px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  border-right: 1px solid #647591;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.logo-container img {
+  max-width: 200px;
+  height: auto;
+}
+
+.menu-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.menu-items {
+  margin-top: 18%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* HEADER AZUL SUPERIOR */
+.top-header {
+  height: 70px; /* Altura fija del header */
+  background-color: #16529E; /* Tu azul exacto */
+  display: flex;
+  align-items: center;
+  color: white;
+}
+
+.logo-section {
+  width: 270px; /* Debe coincidir con el ancho del sidebar para que se alineen */
+  display: flex;
+  justify-content: center;
+}
+
+.header-logo {
+  max-width: 160px;
+}
+
+.title-section {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.title-section h2 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+/* CUERPO: Sidebar y Contenido lado a lado */
+.app-body {
+  display: flex;
+  flex-grow: 1; /* Ocupa el espacio restante abajo del header */
+  overflow: hidden;
+}
+
+/* Estilo para los botones de menú */
+.menu-button {
+  width: calc(100% - 1.5rem) !important;
+  justify-content: flex-start !important;
+  color: #16529e !important; /* PARA EL TEXTO E ICONO */
+  padding: 0.75rem 3rem !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important; 
+  font-weight: 600 !important;
+  font-size: 1.1rem !important;
+  transition: all 0.2s;
+}
+
+/* Espacio entre icono y texto */
+.menu-button .p-button-icon {
+  color: #16529e !important; /* Color del icono */
+  margin-right: 1.25rem !important;
+  font-size: 1.4rem !important;
+}
+
+/* Efecto Hover */
+.menu-button:hover {
+  background: rgba(22, 82, 158, 0.1) !important; 
+  color: #16529E !important; 
+  border-radius: 8px !important; 
+  width: 90% !important;
+  margin-left: 5% !important;
+}
+
+/* Estilo para el link ACTIVO (Home/Dashboard en tu imagen) */
+.active-link {
+  position: relative;
+  
+  background: transparent !important;
+}
+
+/* El indicador de borde izquierdo como en Figma */
+.active-link:before {
+  content: '';
+  position: absolute;
+  left: -1.5rem; 
+  top: 0;
+  height: 100%;
+  width: 6px;
+  background-color: #16529e; 
+  border-radius: 0 4px 4px 0;
+}
+
+.main-content {
+  flex-grow: 1;
+  overflow-y: auto;
+}

@@ -1,5 +1,6 @@
 import './assets/main.css'
 import 'tailwindcss'
+import 'primeicons/primeicons.css'
 
 import PrimeVue from 'primevue/config'
 import Aura from '@primeuix/themes/aura'
