@@ -37,7 +37,7 @@
             <!-- REGISTER -->
             <p class="text-center text-sm mt-6">
                 ¿No tienes cuenta?
-                <router-link to="/register" class="text-(--color-primary) font-semibold">
+                <router-link to="/registro-paciente" class="text-(--color-primary) font-semibold">
                     Crear cuenta
                 </router-link>
             </p>
