@@ -124,11 +124,19 @@ body {
   font-weight: 500;
 }
 
+.h3 {
+  color: #101f49;
+  font-size: 1.75rem;
+  font-weight: 645;
+  line-height: 1.7;
+}
+
 /* CUERPO: Sidebar y Contenido lado a lado */
 .app-body {
   display: flex;
-  flex-grow: 1; /* Ocupa el espacio restante abajo del header */
+  flex-grow: 1; 
   overflow: hidden;
+  background-color: #f8fafc;
 }
 
 /* Estilo para los botones de menú */
@@ -183,4 +191,18 @@ body {
 .main-content {
   flex-grow: 1;
   overflow-y: auto;
+}
+
+.btn-add {
+  color: white;
+  border: none;
+  padding: 0.5rem 0.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+  display: flex;
+}
+
+.btn-add:hover {
+  opacity: 0.5;
 }

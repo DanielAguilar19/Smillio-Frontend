@@ -2,6 +2,12 @@
 import Button from 'primevue/button'
 import ScrollPanel from 'primevue/scrollpanel'
 import Divider from 'primevue/divider'
+import Panel from 'primevue/panel'
+import DataTable from 'primevue/datatable'
+import Column from 'primevue/column'
+import Tag from 'primevue/tag'
+import Card from 'primevue/card'
+
 </script>
 
 <template>
@@ -29,9 +35,99 @@ import Divider from 'primevue/divider'
     </nav>
 
     <main class="main-content">
-      <div class="p-4">
-          <h1 style="color: #16529E;">Panel Principal</h1>
+      <div class="p-5">
+          <h1 class="h1">¡Bienvenido, Dr. [Nombre del Odontólogo]!</h1>
+          <p style="font-size: medium;">Aquí puedes ver un resumen de tus próximas citas, pacientes recientes y 
+            otras actividades relevantes.</p>
+      </div>
+
+        <div class="px-5 pt-3"> 
+          <Panel header="Próximas Citas" style="font-size: large;">
+            <!-- <DataTable :value="citas" class="p-datatable-sm"> -->
+            <DataTable class="p-datatable-sm" style="font-size: medium;">
+              <Column field="fecha" header="Fecha/Hora"></Column>
+              <Column field="paciente" header="Paciente"></Column>
+              <Column field="odontologo" header="Odontólogo"></Column>
+              <Column field="clinica" header="Clínica"></Column>
+              <Column field="especialidad" header="Especialidad"></Column>
+              <Column field="estado" header="Estado">
+                <template #body="slotProps">
+                  <Tag :value="slotProps.data.estado" severity="success" />
+                </template>
+              </Column>
+              <Column header="Acciones">
+                <template #body>
+                  <div class="flex gap-2">
+                    <Button label="Ver Detalle" text size="small" />
+                    <Button label="Cancelar" text severity="danger" size="small" />
+                  </div>
+                </template>
+              </Column>
+            </DataTable>
+          </Panel>
+        </div>
+
+        <section class="section-container">
+          <div class="cards-grid">
+           
+            <Card class="custom-card">
+              <template #title>
+                <div class="flex align-items-center">
+                  <i class="pi pi-calendar mr-2" style="color: #a9c2ef; font-size: 1.2rem"></i>
+                  <span style="color: #335497;">Ver Mi Agenda</span>
+                </div>
+              </template>
+              <template #content>
+                <p class="m-0 text-600">
+                  Revisa tus citas en segundos desde tu celular.
+                </p>
+              </template>
+            </Card>
+      
+            <Card class="custom-card">
+              <template #title>
+                <div class="flex align-items-center">
+                  <i class="pi pi-users mr-2" style="color: #a9c2ef; font-size: 1.2rem"></i>
+                  <span style="color: #335497;">Gestionar Pacientes</span>
+                </div>
+              </template>
+              <template #content>
+                <p class="m-0 text-600">
+                  Administra el contacto de tus pacientes.
+                </p>
+              </template>
+            </Card>
+
+            <Card class="custom-card">
+              <template #title>
+                <div class="flex align-items-center">
+                  <i class="pi pi-building mr-2" style="color: #a9c2ef; font-size: 1.2rem"></i>
+                  <span style="color: #335497;">Gestionar Clínicas</span>
+                </div>
+              </template>
+              <template #content>
+                <p class="m-0 text-600">
+                  Administra la información e historial de tus clínicas.
+                </p>
+              </template>
+            </Card>
+
+            <Card class="custom-card">
+              <template #title>
+                <div class="flex align-items-center">
+                  <i class="pi pi-cog mr-2" style="color: #a9c2ef; font-size: 1.2rem"></i>
+                  <span style="color: #335497;">Configurar Mi Perfil</span>
+                </div>
+              </template>
+              <template #content>
+                <p class="m-0 text-600">
+                  Gestiona tu información personal y preferencias.
+                </p>
+              </template>
+            </Card>
+
           </div>
+        </section>
     </main>
 
   </div>
@@ -54,6 +150,12 @@ import Divider from 'primevue/divider'
   padding: 0;
   border-right: 1px solid #e1e4e8;
 }
+
+.section-container {
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
 
 :deep(.menu-button) {
   width: 100% !important;
@@ -91,5 +193,44 @@ import Divider from 'primevue/divider'
   overflow-y: auto;
 }
 
+.h1 {
+  color: #16529E;
+  font-weight: bold;
+  font-size: x-large;
+  margin-top: 1.5rem;
+}
+
+.cards-grid {
+  margin-top: 2.5rem;
+  display: grid;
+  gap: 3rem;
+  padding-left: 4rem;
+  margin-inline: 2rem;
+  width: 87%;
+}
+@media (min-width: 768px) {
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.custom-card {
+  border-left: 5px solid #16529e; /* El azul base */
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  background: #ffffff;
+}
+
+.custom-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 15px rgba(22, 82, 158, 0.15); /* Sombra sutil azulada */
+}
+
+/* Ajuste para el texto del contenido */
+.text-600 {
+  color: #64748b;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
 
 </style>
