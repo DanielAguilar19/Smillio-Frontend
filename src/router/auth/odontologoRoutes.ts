@@ -4,6 +4,8 @@ import PacientesView from '@/views/OdontologoView/O-pacientes.vue'
 import ClinicasView from '@/views/OdontologoView/O-clinicas.vue'
 import PerfilView from '@/views/OdontologoView/O-perfil.vue'
 
+
+
 export default [
   {
     path: '/o-home',
