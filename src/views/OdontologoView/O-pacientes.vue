@@ -4,10 +4,12 @@ import Divider from 'primevue/divider'
 import Panel from 'primevue/panel'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
-import Tag from 'primevue/tag'
 import Select from 'primevue/select'; 
-import { ref } from 'vue'
 
+import { useNavStore } from '@/stores/navigation'
+const nav = useNavStore();
+
+import { ref } from 'vue'
 const selectedClinica = ref();
 const clinicas = ref([
   { name: 'Clínica Santa Fe', code: 'SF' },
@@ -37,14 +39,14 @@ const estados = ref([
   <div class="app-body">
     <nav class="sidebar">
       <div class="menu-items">
-        <Button label="Home" icon="pi pi-home" text class="menu-button" />
-        <Button label="Agenda" icon="pi pi-calendar" text class="menu-button" />
+        <Button @click="nav.irAhome()" label="Home" icon="pi pi-home" text class="menu-button" />
+        <Button @click="nav.irAagenda()" label="Agenda" icon="pi pi-calendar" text class="menu-button" />
         <Button label="Pacientes" icon="pi pi-users" text class="menu-button active-link" />
-        <Button label="Clínicas" icon="pi pi-building" text class="menu-button" />
+        <Button @click="nav.irAclinicas()" label="Clínicas" icon="pi pi-building" text class="menu-button" />
     </div>
       <Divider />
       <div class="menu-group">
-        <Button label="Mi Perfil" icon="pi pi-cog" text class="menu-button" />
+        <Button @click="nav.irAperfil()"label="Mi Perfil" icon="pi pi-cog" text class="menu-button" />
       </div>
     </nav>
 

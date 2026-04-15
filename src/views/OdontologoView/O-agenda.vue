@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import Button from 'primevue/button'
 import Divider from 'primevue/divider'
-import { ref } from 'vue';
 import FullCalendar from '@fullcalendar/vue3';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import Select from 'primevue/select';
 
+import { useNavStore } from '@/stores/navigation'
+const nav = useNavStore();
+
+import { ref } from 'vue';
 const selectedClinica = ref();
 const clinicas = ref([
   { name: 'Clínica Santa Fe', code: 'SF' },
@@ -35,6 +38,7 @@ const calendarOptions = ref({
   slotMinTime: '08:00:00', // Hora de inicio
   slotMaxTime: '20:00:00', // Hora de cierre
 });
+
 </script>
 
 <template>
@@ -51,14 +55,14 @@ const calendarOptions = ref({
     <div class="app-body">
       <nav class="sidebar">
         <div class="menu-items">
-          <Button label="Home" icon="pi pi-home" text class="menu-button" />
+          <Button @click="nav.irAhome()"label="Home" icon="pi pi-home" text class="menu-button" />
           <Button label="Agenda" icon="pi pi-calendar" text class="menu-button active-link" />
-          <Button label="Pacientes" icon="pi pi-users" text class="menu-button" />
-          <Button label="Clínicas" icon="pi pi-building" text class="menu-button" />
+          <Button @click="nav.irApacientes()" label="Pacientes" icon="pi pi-users" text class="menu-button" />
+          <Button @click="nav.irAclinicas()" label="Clínicas" icon="pi pi-building" text class="menu-button" />
         </div>
         <Divider />
         <div class="menu-group">
-          <Button label="Mi Perfil" icon="pi pi-cog" text class="menu-button" />
+          <Button @click="nav.irAperfil()" label="Mi Perfil" icon="pi pi-cog" text class="menu-button" />
         </div>
       </nav>
 
