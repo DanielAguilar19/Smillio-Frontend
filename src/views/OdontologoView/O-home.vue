@@ -8,6 +8,9 @@ import Column from 'primevue/column'
 import Tag from 'primevue/tag'
 import Card from 'primevue/card'
 
+import { useNavStore } from '@/stores/navigation'
+const nav = useNavStore();
+
 </script>
 
 <template>
@@ -21,15 +24,15 @@ import Card from 'primevue/card'
       <ScrollPanel style="height: calc(100vh - 120px)" class="custom-scroll">
         <div class="menu-group">
           <Button label="Home" icon="pi pi-home" text class="menu-button active-item" />
-          <Button label="Agenda" icon="pi pi-calendar" text class="menu-button" />
-          <Button label="Pacientes" icon="pi pi-users" text class="menu-button" />
-          <Button label="Clínicas" icon="pi pi-building" text class="menu-button" />
+          <Button @click="nav.irAagenda()" label="Agenda" icon="pi pi-calendar" text class="menu-button" />
+          <Button @click="nav.irApacientes()" label="Pacientes" icon="pi pi-users" text class="menu-button" />
+          <Button @click="nav.irAclinicas()" label="Clínicas" icon="pi pi-building" text class="menu-button" />
         </div>
 
         <Divider />
 
         <div class="menu-group">
-          <Button label="Mi Perfil" icon="pi pi-cog" text class="menu-button" />
+          <Button @click="nav.irAperfil()" label="Mi Perfil" icon="pi pi-cog" text class="menu-button" />
         </div>
       </ScrollPanel>
     </nav>
@@ -70,7 +73,7 @@ import Card from 'primevue/card'
         <section class="section-container">
           <div class="cards-grid">
            
-            <Card class="custom-card">
+            <Card @click="nav.irAagenda()" class="custom-card">
               <template #title>
                 <div class="flex align-items-center">
                   <i class="pi pi-calendar mr-2" style="color: #a9c2ef; font-size: 1.2rem"></i>
@@ -84,7 +87,7 @@ import Card from 'primevue/card'
               </template>
             </Card>
       
-            <Card class="custom-card">
+            <Card @click="nav.irApacientes()" class="custom-card">
               <template #title>
                 <div class="flex align-items-center">
                   <i class="pi pi-users mr-2" style="color: #a9c2ef; font-size: 1.2rem"></i>
@@ -98,7 +101,7 @@ import Card from 'primevue/card'
               </template>
             </Card>
 
-            <Card class="custom-card">
+            <Card @click="nav.irAclinicas()" class="custom-card">
               <template #title>
                 <div class="flex align-items-center">
                   <i class="pi pi-building mr-2" style="color: #a9c2ef; font-size: 1.2rem"></i>
@@ -112,7 +115,7 @@ import Card from 'primevue/card'
               </template>
             </Card>
 
-            <Card class="custom-card">
+            <Card @click="nav.irAperfil()" class="custom-card">
               <template #title>
                 <div class="flex align-items-center">
                   <i class="pi pi-cog mr-2" style="color: #a9c2ef; font-size: 1.2rem"></i>

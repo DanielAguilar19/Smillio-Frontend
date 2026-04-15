@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { login } from '@/api/auth/loginApi'
 
+
 interface User {
   id: number
   correo: string
@@ -41,3 +42,5 @@ export const useAuthStore = defineStore('auth', {
     },
   },
 })
+
+
