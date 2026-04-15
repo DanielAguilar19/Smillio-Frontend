@@ -57,7 +57,9 @@
         <div class="steps-grid">
           <div class="step-card">
             <div class="step-number">01</div>
-            <div class="step-icon">🔍</div>
+            <div class="step-icon">
+              <i class="pi pi-search"></i>
+            </div>
             <h3 class="step-title">Buscar</h3>
             <p class="step-desc">Encuentra clínicas cercanas según tu ubicación y especialidad.</p>
           </div>
@@ -66,7 +68,9 @@
 
           <div class="step-card step-card--accent">
             <div class="step-number step-number--light">02</div>
-            <div class="step-icon">👨‍⚕️</div>
+            <div class="step-icon">
+              <i class="pi pi-user"></i>
+            </div>
             <h3 class="step-title step-title--light">Seleccionar</h3>
             <p class="step-desc step-desc--light">Elige el odontólogo que mejor se adapte a ti y tu presupuesto.</p>
           </div>
@@ -75,7 +79,9 @@
 
           <div class="step-card">
             <div class="step-number">03</div>
-            <div class="step-icon">📅</div>
+            <div class="step-icon">
+              <i class="pi pi-calendar"></i>
+            </div>
             <h3 class="step-title">Agendar</h3>
             <p class="step-desc">Reserva tu cita en segundos desde tu celular.</p>
           </div>
@@ -90,23 +96,33 @@
 
           <!-- Pacientes -->
           <div class="benefit-card benefit-card--blue">
-            <div class="benefit-icon-wrap benefit-icon-wrap--blue">🧑‍💼</div>
+            <div class="benefit-icon-wrap benefit-icon-wrap--blue">
+              <i class="pi pi-users"></i>
+            </div>
             <h2 class="benefit-title">Para pacientes</h2>
             <ul class="benefit-list">
               <li class="benefit-item">
-                <span class="benefit-check">✓</span>
+                <span class="benefit-check">
+                  <i class="pi pi-check"></i>
+                </span>
                 Agenda rápida y sencilla en segundos
               </li>
               <li class="benefit-item">
-                <span class="benefit-check">✓</span>
+                <span class="benefit-check">
+                  <i class="pi pi-check"></i>
+                </span>
                 Clínicas y odontólogos verificados
               </li>
               <li class="benefit-item">
-                <span class="benefit-check">✓</span>
+                <span class="benefit-check">
+                  <i class="pi pi-check"></i>
+                </span>
                 Ahorra tiempo sin llamadas
               </li>
               <li class="benefit-item">
-                <span class="benefit-check">✓</span>
+                <span class="benefit-check">
+                  <i class="pi pi-check"></i>
+                </span>
                 Recordatorios de citas automáticos
               </li>
             </ul>
@@ -115,24 +131,30 @@
 
           <!-- Clínicas -->
           <div class="benefit-card benefit-card--dark">
-            <div class="benefit-icon-wrap benefit-icon-wrap--dark">🏥</div>
+            <div class="benefit-icon-wrap benefit-icon-wrap--dark">
+              <i class="pi pi-building"></i>
+            </div>
             <h2 class="benefit-title benefit-title--light">Para clínicas</h2>
             <ul class="benefit-list">
               <li class="benefit-item benefit-item--light">
-                <span class="benefit-check benefit-check--light">✓</span>
-                Más pacientes nuevos cada mes
+                <span class="benefit-check">
+                  <i class="pi pi-check"></i>
+                </span> Más pacientes nuevos cada mes
               </li>
               <li class="benefit-item benefit-item--light">
-                <span class="benefit-check benefit-check--light">✓</span>
-                Gestión de agenda centralizada
+                <span class="benefit-check">
+                  <i class="pi pi-check"></i>
+                </span> Gestión de agenda centralizada
               </li>
               <li class="benefit-item benefit-item--light">
-                <span class="benefit-check benefit-check--light">✓</span>
-                Reducción de citas canceladas
+                <span class="benefit-check">
+                  <i class="pi pi-check"></i>
+                </span> Reducción de citas canceladas
               </li>
               <li class="benefit-item benefit-item--light">
-                <span class="benefit-check benefit-check--light">✓</span>
-                Panel de control completo
+                <span class="benefit-check">
+                  <i class="pi pi-check"></i>
+                </span> Panel de control completo
               </li>
             </ul>
             <Button label="Registrar clínica" icon="pi pi-arrow-right" outlined class="benefit-btn-outline" />
@@ -211,7 +233,9 @@ function RegistroPaciente() {
 }
 
 @media (min-width: 768px) {
-  .hero-title { font-size: 3rem; }
+  .hero-title {
+    font-size: 3rem;
+  }
 }
 
 .hero-title-accent {
@@ -308,13 +332,26 @@ function RegistroPaciente() {
 }
 
 @media (min-width: 768px) {
-  .img-hero { width: 20rem; }
-  .hero-image-bg { width: 22rem; height: 22rem; }
+  .img-hero {
+    width: 20rem;
+  }
+
+  .hero-image-bg {
+    width: 22rem;
+    height: 22rem;
+  }
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
 }
 
 /* ── STEPS ────────────────────────────────────── */
@@ -345,7 +382,9 @@ function RegistroPaciente() {
 }
 
 @media (min-width: 768px) {
-  .section-title { font-size: 2.25rem; }
+  .section-title {
+    font-size: 2.25rem;
+  }
 }
 
 .section-subtitle {
@@ -399,7 +438,9 @@ function RegistroPaciente() {
   margin-bottom: 0.75rem;
 }
 
-.step-number--light { color: rgba(255,255,255,0.5); }
+.step-number--light {
+  color: rgba(255, 255, 255, 0.5);
+}
 
 .step-icon {
   font-size: 2.5rem;
@@ -413,7 +454,9 @@ function RegistroPaciente() {
   margin-bottom: 0.5rem;
 }
 
-.step-title--light { color: white; }
+.step-title--light {
+  color: white;
+}
 
 .step-desc {
   font-size: 0.9375rem;
@@ -421,7 +464,9 @@ function RegistroPaciente() {
   line-height: 1.5;
 }
 
-.step-desc--light { color: rgba(255,255,255,0.85); }
+.step-desc--light {
+  color: rgba(255, 255, 255, 0.85);
+}
 
 .step-arrow {
   font-size: 2rem;
@@ -430,7 +475,10 @@ function RegistroPaciente() {
 }
 
 @media (min-width: 768px) {
-  .step-arrow { display: flex; align-items: center; }
+  .step-arrow {
+    display: flex;
+    align-items: center;
+  }
 }
 
 /* ── BENEFICIOS ───────────────────────────────── */
@@ -445,7 +493,9 @@ function RegistroPaciente() {
 }
 
 @media (min-width: 768px) {
-  .benefits-grid { grid-template-columns: repeat(2, 1fr); }
+  .benefits-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .benefit-card {
@@ -476,8 +526,13 @@ function RegistroPaciente() {
   font-size: 1.75rem;
 }
 
-.benefit-icon-wrap--blue { background-color: var(--primary-50); }
-.benefit-icon-wrap--dark { background-color: rgba(255,255,255,0.15); }
+.benefit-icon-wrap--blue {
+  background-color: var(--primary-50);
+}
+
+.benefit-icon-wrap--dark {
+  background-color: rgba(255, 255, 255, 0.15);
+}
 
 .benefit-title {
   font-size: 1.375rem;
@@ -485,7 +540,9 @@ function RegistroPaciente() {
   color: #111827;
 }
 
-.benefit-title--light { color: white; }
+.benefit-title--light {
+  color: white;
+}
 
 .benefit-list {
   list-style: none;
@@ -505,7 +562,9 @@ function RegistroPaciente() {
   color: #374151;
 }
 
-.benefit-item--light { color: rgba(255,255,255,0.9); }
+.benefit-item--light {
+  color: rgba(255, 255, 255, 0.9);
+}
 
 .benefit-check {
   display: flex;
@@ -522,7 +581,7 @@ function RegistroPaciente() {
 }
 
 .benefit-check--light {
-  background-color: rgba(255,255,255,0.2);
+  background-color: rgba(255, 255, 255, 0.2);
   color: white;
 }
 
@@ -536,7 +595,7 @@ function RegistroPaciente() {
 }
 
 .benefit-btn-outline {
-  border: 2px solid rgba(255,255,255,0.6) !important;
+  border: 2px solid rgba(255, 255, 255, 0.6) !important;
   color: white !important;
   background: transparent !important;
   font-weight: 600 !important;
@@ -570,12 +629,14 @@ function RegistroPaciente() {
 }
 
 @media (min-width: 768px) {
-  .cta-title { font-size: 2.5rem; }
+  .cta-title {
+    font-size: 2.5rem;
+  }
 }
 
 .cta-text {
   margin-top: 1rem;
-  color: rgba(255,255,255,0.85);
+  color: rgba(255, 255, 255, 0.85);
   font-size: 1.0625rem;
 }
 
@@ -594,11 +655,11 @@ function RegistroPaciente() {
   font-weight: 700 !important;
   border-radius: 0.75rem !important;
   padding: 0.75rem 1.75rem !important;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
 }
 
 .btn-cta-outline {
-  border: 2px solid rgba(255,255,255,0.65) !important;
+  border: 2px solid rgba(255, 255, 255, 0.65) !important;
   color: white !important;
   background: transparent !important;
   font-weight: 600 !important;
