@@ -205,136 +205,181 @@ body {
 
 .btn-add:hover {
   opacity: 0.5;
-  .bg-primary-gradient {
-    background: linear-gradient(135deg, #4f7bcb, #6ea0e6);
-  }
-  /* Gradientes */
-  .bg-primary-gradient {
-    background: linear-gradient(135deg, #4f7bcb, #6ea0e6);
-  }
+}
 
-  /* Cards */
-  .p-card {
-    border: none !important;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
-  }
+/* Gradientes */
+.bg-primary-gradient {
+  background: linear-gradient(135deg, #4f7bcb, #6ea0e6);
+}
 
-  .p-card:hover {
-    box-shadow: 0 4px 12px rgba(79, 123, 203, 0.15) !important;
-  }
+/* Cards */
+.p-card {
+  border: none !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
 
-  /* Inputs */
-  .p-inputtext,
-  .p-inputtextarea,
-  .p-dropdown,
-  .p-calendar .p-datepicker {
-    border: 1px solid var(--primary-200) !important;
-    border-radius: 0.375rem !important;
-  }
+.p-card:hover {
+  box-shadow: 0 4px 12px rgba(79, 123, 203, 0.15) !important;
+}
 
-  .p-inputtext:focus,
-  .p-inputtextarea:focus,
-  .p-dropdown:focus,
-  .p-calendar .p-datepicker:focus {
-    border-color: var(--primary-400) !important;
-    box-shadow: 0 0 0 0.2rem var(--primary-50) !important;
-    outline: none !important;
-  }
+/* Inputs */
+.p-inputtext,
+.p-inputtextarea,
+.p-dropdown,
+.p-calendar .p-datepicker {
+  border: 1px solid var(--primary-200) !important;
+  border-radius: 0.375rem !important;
+}
 
-  /* Checkboxes */
-  .p-checkbox .p-checkbox-box {
-    border: 2px solid var(--primary-200) !important;
-    border-radius: 0.25rem !important;
-  }
+.p-inputtext:focus,
+.p-inputtextarea:focus,
+.p-dropdown:focus,
+.p-calendar .p-datepicker:focus {
+  border-color: var(--primary-400) !important;
+  box-shadow: 0 0 0 0.2rem var(--primary-50) !important;
+  outline: none !important;
+}
 
-  .p-checkbox .p-checkbox-box.p-highlight {
-    background-color: var(--primary-600) !important;
-    border-color: var(--primary-600) !important;
-  }
+/* Checkboxes */
+.p-checkbox .p-checkbox-box {
+  border: 2px solid var(--primary-200) !important;
+  border-radius: 0.25rem !important;
+}
 
-  /* Messages */
-  .p-message {
-    border-radius: 0.375rem !important;
-    border: none !important;
-  }
+.p-checkbox .p-checkbox-box.p-highlight {
+  background-color: var(--primary-600) !important;
+  border-color: var(--primary-600) !important;
+}
 
-  .p-message-success {
-    background-color: #f0fdf4 !important;
-    color: #15803d !important;
-  }
+/* Messages */
+.p-message {
+  border-radius: 0.375rem !important;
+  border: none !important;
+}
 
-  .p-message-error {
-    background-color: #fef2f2 !important;
-    color: #991b1b !important;
-  }
+.p-message-success {
+  background-color: #f0fdf4 !important;
+  color: #15803d !important;
+}
 
-  .p-message-warning {
-    background-color: #fffbeb !important;
-    color: #92400e !important;
-  }
+.p-message-error {
+  background-color: #fef2f2 !important;
+  color: #991b1b !important;
+}
 
-  .p-message-info {
-    background-color: #f0f9ff !important;
-    color: #0c4a6e !important;
-  }
+.p-message-warning {
+  background-color: #fffbeb !important;
+  color: #92400e !important;
+}
 
-  /* Tags */
-  .p-tag {
-    border-radius: 999px !important;
-  }
+.p-message-info {
+  background-color: #f0f9ff !important;
+  color: #0c4a6e !important;
+}
 
-  .p-tag.p-tag-success {
-    background-color: #dcfce7 !important;
-    color: #166534 !important;
-  }
+/* Tags */
+.p-tag {
+  border-radius: 999px !important;
+}
 
-  /* Progress Spinner */
-  .p-progress-spinner {
-    color: var(--primary-600);
-  }
+.p-tag.p-tag-success {
+  background-color: #dcfce7 !important;
+  color: #166534 !important;
+}
 
-  /* Paginator */
-  .p-paginator {
-    background-color: var(--primary-50) !important;
-    border: 1px solid var(--primary-100) !important;
-    border-radius: 0.375rem !important;
-    padding: 1rem !important;
-  }
+/* Progress Spinner */
+.p-progress-spinner {
+  color: var(--primary-600);
+}
 
-  .p-paginator .p-paginator-element:hover {
-    background-color: var(--primary-100) !important;
-    color: var(--primary-600) !important;
-  }
+/* Paginator */
+.p-paginator {
+  background-color: var(--primary-50) !important;
+  border: 1px solid var(--primary-100) !important;
+  border-radius: 0.375rem !important;
+  padding: 1rem !important;
+}
 
-  /* Dialog */
-  .p-dialog .p-dialog-header {
-    background-color: var(--primary-50) !important;
-    border-bottom: 2px solid var(--primary-200) !important;
-    padding: 1.5rem !important;
-  }
+.p-paginator .p-paginator-element:hover {
+  background-color: var(--primary-100) !important;
+  color: var(--primary-600) !important;
+}
 
-  .p-dialog .p-dialog-header .p-dialog-title {
-    color: var(--primary-600) !important;
-    font-weight: 600 !important;
-  }
+/* Dialog */
+.p-dialog .p-dialog-header {
+  background-color: var(--primary-50) !important;
+  border-bottom: 2px solid var(--primary-200) !important;
+  padding: 1.5rem !important;
+}
 
-  /* Transiciones suaves */
-  * {
-    transition:
-      color 150ms ease,
-      background-color 150ms ease,
-      border-color 150ms ease,
-      box-shadow 150ms ease;
-  }
+.p-dialog .p-dialog-header .p-dialog-title {
+  color: var(--primary-600) !important;
+  font-weight: 600 !important;
+}
 
-  button,
-  a {
-    transition: all 200ms ease;
-  }
+/* Transiciones suaves */
+* {
+  transition:
+    color 150ms ease,
+    background-color 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
 
-  /* Accesibilidad */
-  :focus-visible {
-    outline: 2px solid var(--primary-600) !important;
-    outline-offset: 2px !important;
-  }
+button,
+a {
+  transition: all 200ms ease;
+}
+
+/* Accesibilidad */
+:focus-visible {
+  outline: 2px solid var(--primary-600) !important;
+  outline-offset: 2px !important;
+}
+
+
+:root {
+  /* Mapeo de tus colores a los nombres que busca el componente */
+  --brand-50: var(--primary-50);
+  --brand-100: var(--primary-100);
+  --brand-400: var(--primary-400);
+  --brand-600: var(--primary-600);
+  --brand-700: var(--primary-700);
+
+  /* Define los grises que faltan */
+  --neutral-50: #f9fafb;
+  --neutral-100: #f3f4f6;
+  --neutral-200: #e5e7eb;
+  --neutral-300: #d1d5db;
+  --neutral-400: #9ca3af;
+  --neutral-500: #6b7280;
+  --neutral-600: #4b5563;
+
+  --radius-md: 8px;
+}
+
+/* Clases globales que le faltan a tu archivo para que las tablas se vean bien */
+.card {
+  background: white;
+  border: 1px solid var(--neutral-200);
+  border-radius: var(--radius-md);
+  margin-bottom: 1rem;
+}
+.card-pad { padding: 1.25rem; }
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.data-table th {
+  text-align: left;
+  padding: 12px 16px;
+  background: var(--neutral-50);
+  font-size: 13px;
+  color: var(--neutral-600);
+  border-bottom: 1px solid var(--neutral-200);
+}
+.data-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--neutral-50);
 }

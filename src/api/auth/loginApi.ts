@@ -1,6 +1,6 @@
-import axios from 'axios'
+import { api } from '../apiBase'
 
 const API = import.meta.env.VITE_API
 export const login = (data: { correo: string; password: string }) => {
-  return axios.post(`${API}/auth/login`, data)
+  return api.post(`/auth/login`, data)
 }
