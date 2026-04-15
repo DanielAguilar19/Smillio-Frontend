@@ -42,7 +42,7 @@
 
         <div class="hero-image-wrap">
           <div class="hero-image-bg"></div>
-          <img src="https://cdn-icons-png.flaticon.com/512/2966/2966480.png" class="img-hero" alt="Dental" />
+          <img src="/logo.png" class="img-hero" alt="Dental" />
         </div>
       </div>
     </section>
@@ -167,7 +167,7 @@
     <!-- CTA -->
     <section class="cta">
       <div class="cta-inner">
-        <div class="cta-badge">🦷</div>
+        <img src="/logoAlternativo.png" class="cta-badge w-32" alt="Dental" />
         <h2 class="cta-title">Empieza a cuidar tu sonrisa hoy</h2>
         <p class="cta-text">Únete a miles de pacientes que ya agendaron con Smillio</p>
         <div class="cta-buttons">
@@ -253,7 +253,7 @@ function RegistroPaciente() {
   margin-top: 2rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: 1.75rem;
 }
 
 .btn-hero-primary {
@@ -261,8 +261,8 @@ function RegistroPaciente() {
   color: var(--color-primary) !important;
   border: none !important;
   font-weight: 700 !important;
-  border-radius: 0.75rem !important;
-  padding: 0.75rem 1.5rem !important;
+  border-radius: 1.75rem !important;
+  padding: 1.75rem 1.5rem !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
 }
 
@@ -271,8 +271,8 @@ function RegistroPaciente() {
   color: white !important;
   background: transparent !important;
   font-weight: 600 !important;
-  border-radius: 0.75rem !important;
-  padding: 0.75rem 1.5rem !important;
+  border-radius: 1.75rem !important;
+  padding: 1.75rem 1.5rem !important;
 }
 
 .hero-stats {
@@ -297,7 +297,7 @@ function RegistroPaciente() {
 }
 
 .stat-label {
-  font-size: 0.75rem;
+  font-size: 1.75rem;
   color: rgba(255, 255, 255, 0.7);
 }
 
@@ -317,7 +317,7 @@ function RegistroPaciente() {
   position: absolute;
   width: 18rem;
   height: 18rem;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.39);
   border-radius: 50%;
   top: 50%;
   left: 50%;
@@ -372,7 +372,7 @@ function RegistroPaciente() {
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1.75rem;
 }
 
 .section-title {
@@ -431,11 +431,11 @@ function RegistroPaciente() {
 }
 
 .step-number {
-  font-size: 0.75rem;
+  font-size: 1.75rem;
   font-weight: 800;
   color: var(--primary-200);
   letter-spacing: 1px;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1.75rem;
 }
 
 .step-number--light {
@@ -444,7 +444,7 @@ function RegistroPaciente() {
 
 .step-icon {
   font-size: 2.5rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1.75rem;
 }
 
 .step-title {
@@ -550,14 +550,14 @@ function RegistroPaciente() {
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1.75rem;
   flex: 1;
 }
 
 .benefit-item {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1.75rem;
   font-size: 0.9375rem;
   color: #374151;
 }
@@ -575,7 +575,7 @@ function RegistroPaciente() {
   background-color: var(--primary-50);
   color: var(--color-primary);
   border-radius: 50%;
-  font-size: 0.75rem;
+  font-size: 1.75rem;
   font-weight: 700;
   flex-shrink: 0;
 }
@@ -590,7 +590,7 @@ function RegistroPaciente() {
   border: none !important;
   color: white !important;
   font-weight: 600 !important;
-  border-radius: 0.75rem !important;
+  border-radius: 1.75rem !important;
   align-self: flex-start;
 }
 
@@ -599,7 +599,7 @@ function RegistroPaciente() {
   color: white !important;
   background: transparent !important;
   font-weight: 600 !important;
-  border-radius: 0.75rem !important;
+  border-radius: 1.75rem !important;
   align-self: flex-start;
 }
 
@@ -618,7 +618,8 @@ function RegistroPaciente() {
 .cta-badge {
   font-size: 3rem;
   margin-bottom: 1rem;
-  display: block;
+  display: flex;
+  justify-self: center;
 }
 
 .cta-title {
@@ -653,8 +654,8 @@ function RegistroPaciente() {
   color: var(--color-primary) !important;
   border: none !important;
   font-weight: 700 !important;
-  border-radius: 0.75rem !important;
-  padding: 0.75rem 1.75rem !important;
+  border-radius: 1.75rem !important;
+  padding: 1.75rem 1.75rem !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
 }
 
@@ -663,7 +664,7 @@ function RegistroPaciente() {
   color: white !important;
   background: transparent !important;
   font-weight: 600 !important;
-  border-radius: 0.75rem !important;
-  padding: 0.75rem 1.75rem !important;
+  border-radius: 1.75rem !important;
+  padding: 1.75rem 1.75rem !important;
 }
 </style>
