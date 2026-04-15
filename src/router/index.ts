@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import rutasOdontologo from './auth/odontologoRoutes'
-
 import rutasAuth from './auth/authRoutes'
 
 const router = createRouter({
@@ -15,56 +14,48 @@ const router = createRouter({
     {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue'),
     },
-
-
-
-  {
-    path: '/dashboard',
-    name: 'Dashboard',
-    component: () => import('../views/DashboardView.vue'),
-  },
-
-  {
-    path: '/agenda',
-    name: 'Agenda',
-    component: () => import('../views/AgendaView.vue'),
-  },
-  {
-    path: '/pacientes',
-    name: 'Pacientes',
-    component: () => import('../views/PacientesView.vue')
-  },
-  {
-    path: '/pacientes/:id',
-    name: 'PacienteDetalle',
-    component: () => import('../views/PacienteDetalleView.vue')
-  },
-  {
-    path: '/facturacion',
-    name: 'Facturacion',
-    component: () => import('../views/FacturacionView.vue')
-  },
-  {
-    path: '/resenas',
-    name: 'Resenas',
-    component: () => import('../views/ResenasView.vue')
-  },
-  {
-    path: '/clinica',
-    name: 'MiClinica',
-    component: () => import('../views/MiClinicaView.vue')
-  },
-  {
-    path: '/ajustes',
-    name: 'Ajustes',
-    component: () => import('../views/AjustesView.vue')
-  }
-
+    // Nuevas rutas para las vistas mencionadas
+    {
+      path: '/agenda',
+      name: 'agenda',
+      component: () => import('../views/AgendaView.vue'),
+    },
+    {
+      path: '/ajustes',
+      name: 'ajustes',
+      component: () => import('../views/AjustesView.vue'),
+    },
+    {
+      path: '/facturacion',
+      name: 'facturacion',
+      component: () => import('../views/FacturacionView.vue'),
+    },
+    {
+      path: '/mi-clinica',
+      name: 'mi-clinica',
+      component: () => import('../views/MiClinicaView.vue'),
+    },
+    {
+      path: '/pacientes',
+      name: 'pacientes',
+      component: () => import('../views/PacientesView.vue'),
+    },
+    {
+      path: '/paciente/:id', // Ruta dinámica para el detalle
+      name: 'paciente-detalle',
+      component: () => import('../views/PacienteDetalleView.vue'),
+    },
+    {
+      path: '/resenas',
+      name: 'resenas',
+      component: () => import('../views/ResenasView.vue'),
+    },
+    
+    
+    ...rutasAuth,
+    ...rutasOdontologo,
   ],
 })
 
