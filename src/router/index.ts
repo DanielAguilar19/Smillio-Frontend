@@ -20,8 +20,51 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue'),
     },
-    ...rutasAuth,
-    ...rutasOdontologo,
+
+
+
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: () => import('../views/DashboardView.vue'),
+  },
+
+  {
+    path: '/agenda',
+    name: 'Agenda',
+    component: () => import('../views/AgendaView.vue'),
+  },
+  {
+    path: '/pacientes',
+    name: 'Pacientes',
+    component: () => import('../views/PacientesView.vue')
+  },
+  {
+    path: '/pacientes/:id',
+    name: 'PacienteDetalle',
+    component: () => import('../views/PacienteDetalleView.vue')
+  },
+  {
+    path: '/facturacion',
+    name: 'Facturacion',
+    component: () => import('../views/FacturacionView.vue')
+  },
+  {
+    path: '/resenas',
+    name: 'Resenas',
+    component: () => import('../views/ResenasView.vue')
+  },
+  {
+    path: '/clinica',
+    name: 'MiClinica',
+    component: () => import('../views/MiClinicaView.vue')
+  },
+  {
+    path: '/ajustes',
+    name: 'Ajustes',
+    component: () => import('../views/AjustesView.vue')
+  }
+
   ],
 })
 
