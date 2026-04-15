@@ -25,7 +25,8 @@
                 </div>
 
                 <!-- BOTÓN -->
-                <Button label="Iniciar sesión" class="w-full mt-4 bg-(--color-primary)! border-none!" />
+                <Button @click="handleLogin" label="Iniciar sesión"
+                    class="w-full mt-4 bg-(--color-primary)! border-none!" />
 
             </form>
 
@@ -73,7 +74,6 @@ const handleLogin = async () => {
 
         const rol = res.data.rol
 
-        // 🔥 REDIRECCIÓN POR ROL
         if (rol === 'PACIENTE') router.push('/home')
         else if (rol === 'CLINICA') router.push('/dashboard')
         else if (rol === 'ODONTOLOGO') router.push('/agenda')

@@ -10,10 +10,12 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
+import { ToastService } from 'primevue'
 
 const app = createApp(App)
 
 app.use(createPinia())
+app.use(ToastService)
 app.use(PrimeVue, {
   ripple: true,
   theme: {
