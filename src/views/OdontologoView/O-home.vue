@@ -73,7 +73,7 @@ const nav = useNavStore();
         <section class="section-container">
           <div class="cards-grid">
            
-            <Card class="custom-card">
+            <Card @click="nav.irAagenda()" class="custom-card">
               <template #title>
                 <div class="flex align-items-center">
                   <i class="pi pi-calendar mr-2" style="color: #a9c2ef; font-size: 1.2rem"></i>
@@ -87,7 +87,7 @@ const nav = useNavStore();
               </template>
             </Card>
       
-            <Card class="custom-card">
+            <Card @click="nav.irApacientes()" class="custom-card">
               <template #title>
                 <div class="flex align-items-center">
                   <i class="pi pi-users mr-2" style="color: #a9c2ef; font-size: 1.2rem"></i>
@@ -101,7 +101,7 @@ const nav = useNavStore();
               </template>
             </Card>
 
-            <Card class="custom-card">
+            <Card @click="nav.irAclinicas()" class="custom-card">
               <template #title>
                 <div class="flex align-items-center">
                   <i class="pi pi-building mr-2" style="color: #a9c2ef; font-size: 1.2rem"></i>
@@ -115,7 +115,7 @@ const nav = useNavStore();
               </template>
             </Card>
 
-            <Card class="custom-card">
+            <Card @click="nav.irAperfil()" class="custom-card">
               <template #title>
                 <div class="flex align-items-center">
                   <i class="pi pi-cog mr-2" style="color: #a9c2ef; font-size: 1.2rem"></i>
