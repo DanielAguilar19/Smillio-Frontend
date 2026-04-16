@@ -10,7 +10,6 @@ export async function registerPaciente(data: {
       ...data,
       tipo: 'PACIENTE',
     })
-
     return response.data
   } catch (error: any) {
     console.log(error)
@@ -27,10 +26,25 @@ export async function crearPerfilPaciente(data: {
 }): Promise<any | undefined> {
   try {
     const response = await api.post('/pacientes/perfil', data)
-
     return response.data
   } catch (error: any) {
     console.log(error)
     LanzarToast('Error al crear la cuenta', 'error')
   }
+}
+
+export async function obtenerPaciente(id: number) {
+  return await api.get(`/pacientes/${id}`)
+}
+
+export async function obtenerPacientePorUsuario(usuarioId: number) {
+  return await api.get(`/pacientes/usuario/${usuarioId}`)
+}
+
+export async function obtenerPacientesClinica(clinicaId: number) {
+  return await api.get(`/pacientes/clinica/${clinicaId}`)
+}
+
+export async function actualizarPaciente(id: number, datos: any) {
+  return await api.put(`/pacientes/${id}`, datos)
 }

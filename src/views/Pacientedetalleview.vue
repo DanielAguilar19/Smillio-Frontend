@@ -1,18 +1,36 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useClinicaStore } from '@/stores/clinica'
+import { useClinicaDashboardStore } from '@/stores/clinicaDashboardStore'
+import { obtenerHistorialPaciente } from '@/api/historial/historialApi'
 
 const route  = useRoute()
 const router = useRouter()
-const store  = useClinicaStore()
+const store  = useClinicaDashboardStore()
 
-const paciente = computed(() => store.getPaciente(route.params.id))
+const pacienteId = computed(() => Number(route.params.id))
+const paciente = computed(() => store.getPaciente(pacienteId.value))
+const historial = ref<any[]>([])
+const loadingHistorial = ref(false)
 
 const citasPaciente = computed(() =>
-  store.citas.filter(c => c.pacienteId === route.params.id)
+  store.citas.filter(c => c.pacienteId === pacienteId.value || c.pacienteId === String(pacienteId.value))
     .sort((a, b) => b.fecha.localeCompare(a.fecha))
 )
+
+onMounted(async () => {
+  if (pacienteId.value) {
+    loadingHistorial.value = true
+    try {
+      const res = await obtenerHistorialPaciente(pacienteId.value)
+      historial.value = res.data || []
+    } catch {
+      historial.value = []
+    } finally {
+      loadingHistorial.value = false
+    }
+  }
+})
 
 const tabActiva = ref('historial')
 const tabs = [
@@ -79,16 +97,16 @@ const estadoBadge = { confirmada: 'badge-success', pendiente: 'badge-warning', c
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--neutral-150)">
         <div>
           <div class="stat-label">Visitas totales</div>
-          <div style="font-size:20px;font-weight:600;color:var(--neutral-800)">{{ paciente.historial.length }}</div>
+          <div style="font-size:20px;font-weight:600;color:var(--neutral-800)">{{ historial.length }}</div>
         </div>
         <div>
           <div class="stat-label">Paciente desde</div>
-          <div style="font-size:20px;font-weight:600;color:var(--neutral-800)">{{ paciente.fechaRegistro.split('-')[0] }}</div>
+          <div style="font-size:20px;font-weight:600;color:var(--neutral-800)">{{ paciente.fechaRegistro?.split('-')[0] || '—' }}</div>
         </div>
         <div>
           <div class="stat-label">Total gastado</div>
           <div style="font-size:20px;font-weight:600;color:var(--neutral-800)">
-            L. {{ paciente.historial.reduce((s, h) => s + h.costo, 0).toLocaleString() }}
+            L. {{ historial.reduce((s, h) => s + (h.costo || 0), 0).toLocaleString() }}
           </div>
         </div>
         <div>
@@ -118,22 +136,25 @@ const estadoBadge = { confirmada: 'badge-success', pendiente: 'badge-warning', c
 
     <!-- Historial clínico -->
     <div v-if="tabActiva === 'historial'">
-      <div v-if="paciente.historial.length" style="display:flex;flex-direction:column;gap:1rem">
-        <div v-for="h in paciente.historial" :key="h.id" class="card card-pad">
+      <div v-if="loadingHistorial" style="padding:2rem;text-align:center;color:var(--neutral-400)">
+        <i class="pi pi-spin pi-spinner" style="font-size:24px"></i>
+      </div>
+      <div v-else-if="historial.length" style="display:flex;flex-direction:column;gap:1rem">
+        <div v-for="h in historial" :key="h.id" class="card card-pad">
           <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem">
             <div style="flex:1">
               <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-                <span class="text-base font-medium">{{ h.servicio }}</span>
+                <span class="text-base font-medium">{{ h.tratamiento || h.descripcion }}</span>
                 <span class="badge badge-success">Completado</span>
               </div>
               <div class="text-sm text-muted" style="margin-top:4px">
-                {{ h.fecha }} · {{ h.doctor }}
+                {{ h.fecha }} · {{ h.odontologo || '—' }}
               </div>
               <div class="text-sm" style="margin-top:8px;color:var(--neutral-600);line-height:1.6">
-                {{ h.notas }}
+                {{ h.descripcion }}
               </div>
             </div>
-            <div style="text-align:right;flex-shrink:0">
+            <div v-if="h.costo" style="text-align:right;flex-shrink:0">
               <div class="text-xs text-muted">Costo</div>
               <div class="text-base font-medium">L. {{ h.costo.toLocaleString() }}</div>
             </div>

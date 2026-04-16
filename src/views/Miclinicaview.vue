@@ -1,11 +1,16 @@
 <script setup>
-import { ref } from 'vue'
-import { useClinicaStore } from '@/stores/clinica'
+import { ref, watch } from 'vue'
+import { useClinicaDashboardStore } from '@/stores/clinicaDashboardStore'
 
-const store = useClinicaStore()
+const store = useClinicaDashboardStore()
 const clinica = ref({ ...store.clinica })
 const guardado = ref(false)
 const tabActiva = ref('general')
+
+// Sync local copy when store loads
+watch(() => store.clinica, (val) => {
+  clinica.value = { ...val }
+}, { deep: true })
 
 const tabs = [
   { id: 'general',   label: 'Información general' },
@@ -13,30 +18,52 @@ const tabs = [
   { id: 'servicios', label: 'Servicios y precios' }
 ]
 
-const dias = [
-  { key: 'lunes',     label: 'Lunes' },
-  { key: 'martes',    label: 'Martes' },
-  { key: 'miercoles', label: 'Miércoles' },
-  { key: 'jueves',    label: 'Jueves' },
-  { key: 'viernes',   label: 'Viernes' },
-  { key: 'sabado',    label: 'Sábado' },
-  { key: 'domingo',   label: 'Domingo' }
-]
+const DIAS_SEMANA = ['LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES', 'SABADO', 'DOMINGO']
+const DIAS_LABEL: Record<string, string> = {
+  LUNES: 'Lunes', MARTES: 'Martes', MIERCOLES: 'Miércoles',
+  JUEVES: 'Jueves', VIERNES: 'Viernes', SABADO: 'Sábado', DOMINGO: 'Domingo'
+}
 
-const guardar = () => {
-  Object.assign(store.clinica, clinica.value)
+// Helper: get horario entry for a given day from the array
+const getHorarioDia = (dia: string) => {
+  const arr: any[] = clinica.value.horario || []
+  return arr.find((h: any) => h.diaSemana === dia) || { diaSemana: dia, horaApertura: '08:00', horaCierre: '17:00', cerrado: true }
+}
+
+const setHorarioDia = (dia: string, campo: string, valor: any) => {
+  if (!clinica.value.horario) clinica.value.horario = []
+  const idx = clinica.value.horario.findIndex((h: any) => h.diaSemana === dia)
+  if (idx >= 0) {
+    clinica.value.horario[idx] = { ...clinica.value.horario[idx], [campo]: valor }
+  } else {
+    clinica.value.horario.push({ diaSemana: dia, horaApertura: '08:00', horaCierre: '17:00', cerrado: false, [campo]: valor })
+  }
+}
+
+const guardar = async () => {
+  await store.guardarClinica({
+    nombre: clinica.value.nombre,
+    rtn: clinica.value.rtn,
+    telefono: clinica.value.telefono,
+    email: clinica.value.email,
+    direccion: clinica.value.direccion,
+    web: clinica.value.web,
+    descripcion: clinica.value.descripcion,
+    doctorNombre: clinica.value.doctorNombre,
+    doctorEspecialidad: clinica.value.doctorEspecialidad,
+  })
   guardado.value = true
   setTimeout(() => guardado.value = false, 2500)
 }
 
 const nuevoServicio = ref({ nombre: '', duracion: 30, precio: 0 })
-const agregarServicio = () => {
+const agregarServicio = async () => {
   if (!nuevoServicio.value.nombre) return
-  clinica.value.servicios.push({ id: `s${Date.now()}`, ...nuevoServicio.value })
+  await store.agregarServicioClinica({ ...nuevoServicio.value })
   nuevoServicio.value = { nombre: '', duracion: 30, precio: 0 }
 }
-const eliminarServicio = (id) => {
-  clinica.value.servicios = clinica.value.servicios.filter(s => s.id !== id)
+const eliminarServicio = async (id: number) => {
+  await store.eliminarServicioClinica(id)
 }
 </script>
 
@@ -126,28 +153,42 @@ const eliminarServicio = (id) => {
     <!-- Horario -->
     <div v-if="tabActiva === 'horario'" class="card card-pad">
       <div style="display:flex;flex-direction:column;gap:10px">
-        <div v-for="dia in dias" :key="dia.key" class="horario-row">
+        <div v-for="dia in DIAS_SEMANA" :key="dia" class="horario-row">
           <div style="display:flex;align-items:center;gap:10px;min-width:140px">
             <label class="toggle-wrap">
-              <input type="checkbox" v-model="clinica.horario[dia.key].activo" />
+              <input
+                type="checkbox"
+                :checked="!getHorarioDia(dia).cerrado"
+                @change="setHorarioDia(dia, 'cerrado', !($event.target as HTMLInputElement).checked)"
+              />
               <span class="toggle-slider"></span>
             </label>
-            <span class="text-sm" :class="clinica.horario[dia.key].activo ? 'text-primary font-medium' : 'text-muted'">
-              {{ dia.label }}
+            <span class="text-sm" :class="!getHorarioDia(dia).cerrado ? 'text-primary font-medium' : 'text-muted'">
+              {{ DIAS_LABEL[dia] }}
             </span>
           </div>
-          <template v-if="clinica.horario[dia.key].activo">
+          <template v-if="!getHorarioDia(dia).cerrado">
             <div style="display:flex;align-items:center;gap:8px">
-              <input type="time" v-model="clinica.horario[dia.key].desde" class="form-input" style="width:120px" />
+              <input
+                type="time"
+                :value="getHorarioDia(dia).horaApertura"
+                @change="setHorarioDia(dia, 'horaApertura', ($event.target as HTMLInputElement).value)"
+                class="form-input" style="width:120px"
+              />
               <span class="text-xs text-muted">hasta</span>
-              <input type="time" v-model="clinica.horario[dia.key].hasta" class="form-input" style="width:120px" />
+              <input
+                type="time"
+                :value="getHorarioDia(dia).horaCierre"
+                @change="setHorarioDia(dia, 'horaCierre', ($event.target as HTMLInputElement).value)"
+                class="form-input" style="width:120px"
+              />
             </div>
           </template>
           <span v-else class="text-xs text-muted">Cerrado</span>
         </div>
       </div>
       <div style="display:flex;justify-content:flex-end;margin-top:1rem">
-        <button class="btn btn-brand" @click="guardar">Guardar horario</button>
+        <button class="btn btn-brand" @click="store.guardarHorario(clinica.horario || [])">Guardar horario</button>
       </div>
     </div>
 

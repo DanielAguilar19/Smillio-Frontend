@@ -1,6 +1,37 @@
 <template>
   <main>
 
+    <!-- NAVBAR -->
+    <nav class="home-navbar">
+      <div class="home-navbar-inner">
+        <div class="home-navbar-brand">
+          <img src="/logo.png" alt="Smillio" class="home-navbar-logo" />
+          <span class="home-navbar-name">Smillio</span>
+        </div>
+
+        <!-- Sin sesión -->
+        <div v-if="!authStore.isAuthenticated" class="home-navbar-actions">
+          <router-link to="/login" class="home-nav-link">Iniciar sesión</router-link>
+          <router-link to="/registro-paciente" class="home-nav-btn">Crear cuenta</router-link>
+        </div>
+
+        <!-- Con sesión -->
+        <div v-else class="home-navbar-actions">
+          <span class="home-nav-user">
+            <i class="pi pi-user-circle"></i>
+            {{ authStore.user?.correo }}
+            <span class="home-nav-role">{{ authStore.user?.rol }}</span>
+          </span>
+          <button class="home-nav-link" @click="irAMiCuenta">
+            <i class="pi pi-home"></i> Mi cuenta
+          </button>
+          <button class="home-nav-btn home-nav-btn--danger" @click="cerrarSesion">
+            <i class="pi pi-sign-out"></i> Salir
+          </button>
+        </div>
+      </div>
+    </nav>
+
     <!-- HERO -->
     <section class="hero">
       <div class="hero-content">
@@ -17,9 +48,10 @@
           </p>
 
           <div class="hero-buttons">
-            <Button label="Buscar clínicas" icon="pi pi-search" class="btn-hero-primary" />
-            <Button label="Soy Odontólogo" outlined class="btn-hero-outline" />
-            <Button @click="RegistroPaciente()" label="Soy Paciente" outlined class="btn-hero-outline" />
+            <Button label="Buscar clínicas" icon="pi pi-search" class="btn-hero-primary" @click="irABusqueda" />
+            <Button label="Soy Clínica" outlined class="btn-hero-outline" @click="irARegistroClinica" />
+            <Button label="Soy Paciente" icon="pi pi-user" outlined class="btn-hero-outline"
+              @click="RegistroPaciente()" />
           </div>
 
           <div class="hero-stats">
@@ -129,6 +161,38 @@
             <Button @click="RegistroPaciente()" label="Buscar clínica" icon="pi pi-arrow-right" class="benefit-btn" />
           </div>
 
+          <!-- Odontólogos -->
+          <div class="benefit-card benefit-card--dark">
+            <div class="benefit-icon-wrap benefit-icon-wrap--dark">
+              <i class="pi pi-user-edit"></i>
+            </div>
+            <h2 class="benefit-title benefit-title--light">Para odontólogos</h2>
+            <ul class="benefit-list">
+              <li class="benefit-item benefit-item--light">
+                <span class="benefit-check">
+                  <i class="pi pi-check"></i>
+                </span> Encuentra pacientes y oportunidades de empleo
+              </li>
+              <li class="benefit-item benefit-item--light">
+                <span class="benefit-check">
+                  <i class="pi pi-check"></i>
+                </span> Sube tus credenciales y títulos
+              </li>
+              <li class="benefit-item benefit-item--light">
+                <span class="benefit-check">
+                  <i class="pi pi-check"></i>
+                </span> Gestiona tu perfil profesional
+              </li>
+              <li class="benefit-item benefit-item--light">
+                <span class="benefit-check">
+                  <i class="pi pi-check"></i>
+                </span> Conecta con clínicas que buscan talento
+              </li>
+            </ul>
+            <Button label="Registrarme como odontólogo" icon="pi pi-arrow-right" class="benefit-btn-outline"
+              @click="irARegistroOdontologo" />
+          </div>
+
           <!-- Clínicas -->
           <div class="benefit-card benefit-card--dark">
             <div class="benefit-icon-wrap benefit-icon-wrap--dark">
@@ -157,7 +221,8 @@
                 </span> Panel de control completo
               </li>
             </ul>
-            <Button label="Registrar clínica" icon="pi pi-arrow-right" outlined class="benefit-btn-outline" />
+            <Button label="Registrar clínica" icon="pi pi-arrow-right" outlined class="benefit-btn-outline"
+              @click="irARegistroClinica" />
           </div>
 
         </div>
@@ -181,15 +246,143 @@
 </template>
 
 <script setup lang="ts">
-import router from '@/router'
+import router, { getHomeParaRol } from '@/router'
 import Button from 'primevue/button'
+import { useAuthStore } from '@/stores/authStore'
+
+const authStore = useAuthStore()
 
 function RegistroPaciente() {
   router.push({ name: 'registro-paciente' })
 }
+
+function irABusqueda() {
+  // Si está autenticado como paciente, ir directo; si no, al login
+  if (authStore.isAuthenticated && authStore.user?.rol === 'PACIENTE') {
+    router.push({ name: 'busqueda-clinicas' })
+  } else if (!authStore.isAuthenticated) {
+    router.push({ name: 'login' })
+  } else {
+    irAMiCuenta()
+  }
+}
+
+function irARegistroOdontologo() {
+  router.push({ name: 'registro-odontologo' })
+}
+
+function irARegistroClinica() {
+  router.push('/registro-odontologo') // placeholder hasta que exista registro-clinica
+}
+
+function irAMiCuenta() {
+  const rol = authStore.user?.rol || ''
+  router.push(getHomeParaRol(rol))
+}
+
+function cerrarSesion() {
+  authStore.logout()
+  router.push('/')
+}
 </script>
 
 <style scoped>
+/* ── NAVBAR ───────────────────────────────────── */
+.home-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(79, 123, 203, 0.12);
+  box-shadow: 0 1px 8px rgba(0,0,0,.06);
+}
+.home-navbar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.home-navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.home-navbar-logo {
+  height: 32px;
+  width: 32px;
+  object-fit: contain;
+}
+.home-navbar-name {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  letter-spacing: 0.5px;
+}
+.home-navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.home-nav-user {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #475569;
+}
+.home-nav-role {
+  background: var(--primary-50);
+  color: var(--color-primary);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 99px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.home-nav-link {
+  font-size: 13px;
+  font-weight: 500;
+  color: #475569;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: all .15s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.home-nav-link:hover {
+  background: #f1f5f9;
+  color: var(--color-primary);
+}
+.home-nav-btn {
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+  background: var(--color-primary);
+  border: none;
+  padding: 7px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: opacity .15s;
+}
+.home-nav-btn:hover { opacity: 0.88; }
+.home-nav-btn--danger {
+  background: #ef4444;
+}
+
 /* ── HERO ─────────────────────────────────────── */
 .hero {
   background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-400) 55%, var(--primary-300) 100%);
@@ -498,6 +691,12 @@ function RegistroPaciente() {
   }
 }
 
+@media (min-width: 1024px) {
+  .benefits-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 .benefit-card {
   border-radius: 1.5rem;
   padding: 2.5rem 2rem;
@@ -598,6 +797,24 @@ function RegistroPaciente() {
   border: 2px solid rgba(255, 255, 255, 0.6) !important;
   color: white !important;
   background: transparent !important;
+  font-weight: 600 !important;
+  border-radius: 1.75rem !important;
+  align-self: flex-start;
+}
+
+.benefit-card--green {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.benefit-icon-wrap--green {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: white;
+}
+
+.benefit-btn-green {
+  background-color: white !important;
+  border: none !important;
+  color: #059669 !important;
   font-weight: 600 !important;
   border-radius: 1.75rem !important;
   align-self: flex-start;

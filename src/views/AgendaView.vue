@@ -1,8 +1,8 @@
 <script setup>
 import { ref, computed } from 'vue'
-import { useClinicaStore } from '@/stores/clinica'
+import { useClinicaDashboardStore } from '@/stores/clinicaDashboardStore'
 
-const store = useClinicaStore()
+const store = useClinicaDashboardStore()
 
 const vistaActiva = ref('semana')
 const semanaOffset = ref(0)

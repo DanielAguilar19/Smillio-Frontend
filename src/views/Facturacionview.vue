@@ -1,9 +1,9 @@
 <script setup>
 import { ref, computed } from 'vue'
 // Asegúrate de que este store exista, si no, dará error
-import { useClinicaStore } from '@/stores/clinica'
+import { useClinicaDashboardStore } from '@/stores/clinicaDashboardStore'
 
-const store = useClinicaStore()
+const store = useClinicaDashboardStore()
 const filtro = ref('todas')
 const busqueda = ref('')
 const showPagoModal = ref(false)

@@ -1,9 +1,10 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { useClinicaStore } from '@/stores/clinica'
+import { useClinicaDashboardStore } from '@/stores/clinicaDashboardStore'
+import { LanzarToast } from '@/utils/toastService'
 
-const store  = useClinicaStore()
+const store  = useClinicaDashboardStore()
 const router = useRouter()
 
 const busqueda = ref('')
@@ -35,15 +36,10 @@ const pacientesFiltrados = computed(() => {
 })
 
 const guardarPaciente = () => {
-  if (!nuevoPaciente.value.nombre || !nuevoPaciente.value.apellido) return
-  store.agregarPaciente({
-    ...nuevoPaciente.value,
-    alergias: nuevoPaciente.value.alergias ? nuevoPaciente.value.alergias.split(',').map(s => s.trim()) : [],
-    enfermedades: nuevoPaciente.value.enfermedades ? nuevoPaciente.value.enfermedades.split(',').map(s => s.trim()) : [],
-    proximaCita: null, rating: null
-  })
+  // Los pacientes se registran ellos mismos desde la app.
+  // Esta vista es de solo lectura para la clínica.
+  LanzarToast('Los pacientes se registran desde la app de pacientes', 'info')
   showModal.value = false
-  nuevoPaciente.value = { nombre: '', apellido: '', email: '', telefono: '', fechaNacimiento: '', tipoSangre: '', alergias: '', enfermedades: '', sexo: 'F', avatarColor: 'blue', estado: 'nuevo' }
 }
 
 const estadoBadge = { activo: 'badge-success', nuevo: 'badge-info', recordatorio: 'badge-warning' }

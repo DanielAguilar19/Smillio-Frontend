@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from 'vue'
-import { useClinicaStore } from '@/stores/clinica'
+import { useClinicaDashboardStore } from '@/stores/clinicaDashboardStore'
 
-const store = useClinicaStore()
+const store = useClinicaDashboardStore()
 
 const notificaciones = ref({
   emailNuevaCita: true,
