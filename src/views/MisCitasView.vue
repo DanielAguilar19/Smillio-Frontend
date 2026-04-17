@@ -7,26 +7,18 @@
           <img src="/logo.png" alt="Smillio" class="h-10 w-10 object-contain" />
           <h1 class="text-xl font-bold" style="color: var(--color-primary)">Mis Citas</h1>
         </div>
-        <Button
-          label="Buscar clínicas"
-          icon="pi pi-plus"
-          @click="irABusqueda"
-          style="background-color: var(--color-primary); border: none"
-        />
+        <Button label="Buscar clínicas" icon="pi pi-plus" @click="irABusqueda"
+          style="background-color: var(--color-primary); border: none" />
       </div>
     </div>
 
     <div class="max-w-7xl mx-auto px-4 py-8">
       <!-- TABS DE ESTADO -->
       <TabView v-model="tabActiva" class="mb-6">
-        <TabPanel header="Próximas" :leftIcon="upcomingCount > 0 ? 'pi pi-check' : ''">
+        <TabPanel value="proximas" header="Próximas" :leftIcon="upcomingCount > 0 ? 'pi pi-check' : ''">
           <div class="space-y-4">
-            <div
-              v-for="cita in citasProximas"
-              :key="cita.id"
-              class="bg-white rounded-lg shadow-sm p-6 border-l-4"
-              style="border-left-color: var(--color-primary)"
-            >
+            <div v-for="cita in citasProximas" :key="cita.id" class="bg-white rounded-lg shadow-sm p-6 border-l-4"
+              style="border-left-color: var(--color-primary)">
               <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <!-- FECHA Y HORA -->
                 <div>
@@ -54,21 +46,9 @@
 
                 <!-- ACCIONES -->
                 <div class="flex flex-col gap-2">
-                  <Button
-                    label="Reagendar"
-                    icon="pi pi-calendar"
-                    outlined
-                    size="small"
-                    @click="reagendar(cita)"
-                  />
-                  <Button
-                    label="Cancelar"
-                    icon="pi pi-trash"
-                    severity="danger"
-                    text
-                    size="small"
-                    @click="confirmarCancelacion(cita)"
-                  />
+                  <Button label="Reagendar" icon="pi pi-calendar" outlined size="small" @click="reagendar(cita)" />
+                  <Button label="Cancelar" icon="pi pi-trash" severity="danger" text size="small"
+                    @click="confirmarCancelacion(cita)" />
                 </div>
               </div>
             </div>
@@ -76,23 +56,16 @@
             <div v-if="citasProximas.length === 0" class="text-center py-12">
               <i class="pi pi-calendar text-6xl text-gray-300 block mb-4"></i>
               <p class="text-gray-500 text-lg">No tienes citas próximas</p>
-              <Button
-                label="Agendar ahora"
-                @click="irABusqueda"
-                style="background-color: var(--color-primary); border: none; margin-top: 1rem"
-              />
+              <Button label="Agendar ahora" @click="irABusqueda"
+                style="background-color: var(--color-primary); border: none; margin-top: 1rem" />
             </div>
           </div>
         </TabPanel>
 
-        <TabPanel header="Completadas" :leftIcon="completadasCount > 0 ? 'pi pi-check-circle' : ''">
+        <TabPanel value="completadas" header="Completadas" :leftIcon="completadasCount > 0 ? 'pi pi-check-circle' : ''">
           <div class="space-y-4">
-            <div
-              v-for="cita in citasCompletadas"
-              :key="cita.id"
-              class="bg-white rounded-lg shadow-sm p-6 border-l-4"
-              style="border-left-color: #10b981"
-            >
+            <div v-for="cita in citasCompletadas" :key="cita.id" class="bg-white rounded-lg shadow-sm p-6 border-l-4"
+              style="border-left-color: #10b981">
               <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div>
                   <p class="text-sm text-gray-600">Fecha</p>
@@ -144,11 +117,11 @@ const confirm = useConfirm()
 const citasStore = useCitasStore()
 const authStore = useAuthStore()
 
-const tabActiva = ref(0)
+const tabActiva = ref('proximas')
 
 const citasProximas = computed(() => {
   const hoy = new Date().toISOString().split('T')[0]
-  return citasStore.misCitas.filter(c => c.estado !== 'CANCELADA' && c.estado !== 'COMPLETADA' && c.fecha >= hoy)
+  return citasStore.misCitas.filter(c => c.estado !== 'CANCELADA' && c.estado !== 'COMPLETADA' && c.fecha >= !hoy)
     .sort((a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime())
 })
 

@@ -7,11 +7,16 @@ import rutasAuth from './auth/authRoutes'
 // Helper: ruta home según rol
 export function getHomeParaRol(rol: string): string {
   switch (rol) {
-    case 'PACIENTE':    return '/busqueda-clinicas'
-    case 'CLINICA':     return '/dashboard'
-    case 'ODONTOLOGO':  return '/o-home'
-    case 'ADMIN':       return '/admin'
-    default:            return '/'
+    case 'PACIENTE':
+      return '/busqueda-clinicas'
+    case 'CLINICA':
+      return '/dashboard'
+    case 'ODONTOLOGO':
+      return '/o-home'
+    case 'ADMIN':
+      return '/admin'
+    default:
+      return '/'
   }
 }
 
@@ -129,7 +134,7 @@ const router = createRouter({
 })
 
 // ── Navigation guard ───────────────────────────────────────────────
-router.beforeEach((to, _from, next) => {
+/*router.beforeEach((to, _from, next) => {
   const storedUser = localStorage.getItem('user')
   const user = storedUser ? JSON.parse(storedUser) : null
   const isAuthenticated = !!user
@@ -158,5 +163,5 @@ router.beforeEach((to, _from, next) => {
 
   next()
 })
-
+*/
 export default router
