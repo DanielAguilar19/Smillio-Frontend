@@ -251,7 +251,7 @@ const agendar = async () => {
     const servicio = servicios.value.find(s => s.nombre === formulario.value.servicio)
 
     await crearCita({
-      pacienteId: authStore.user?.id,
+      usuarioId: authStore.user?.id,
       clinicaId: Number(route.params.id),
       fecha: formulario.value.fecha.toISOString().split('T')[0],
       hora: formulario.value.hora,

@@ -263,7 +263,7 @@ import Message from 'primevue/message'
 import { useAuthStore } from '@/stores/authStore'
 import { useOdontologoStore } from '@/stores/odontologoStore'
 import { LanzarToast } from '@/utils/toastService'
-import { registrarOdontologo } from '@/api/odontologos/odontologosApi'
+import { registrarCuentaOdontologo, registrarOdontologo } from '@/api/odontologos/odontologosApi'
 
 const router = useRouter()
 const authStore = useAuthStore()
@@ -420,15 +420,15 @@ const registrarse = async () => {
 
   cargando.value = true
   try {
-    // 1. Crear cuenta de usuario
-    const usuarioRes = await registrarOdontologo({
-      email: usuarioData.value.email,
+    // 1. Crear cuenta de usuario via /auth/register
+    const usuarioRes = await registrarCuentaOdontologo({
+      correo: usuarioData.value.email,
       password: usuarioData.value.password,
-      rol: 'ODONTOLOGO'
+      tipo: 'ODONTOLOGO'
     })
     // 2. Crear perfil de odontólogo
     const odontologoRes = await odontologoStore.registrar({
-      usuario: { id: usuarioRes.data.id },
+      usuarioId: usuarioRes.data.id,
       nombre: odontologoData.value.nombre,
       apellido: odontologoData.value.apellido,
       cedula: odontologoData.value.cedula,

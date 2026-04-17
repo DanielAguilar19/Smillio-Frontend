@@ -39,3 +39,21 @@ export const eliminarServicio = (clinicaId: number, servicioId: number) => {
 export const actualizarHorario = (clinicaId: number, horario: any[]) => {
   return api.put(`/clinicas/${clinicaId}/horario`, horario)
 }
+
+// Buscar clínicas por especialidad
+export const buscarClinicasPorEspecialidad = (especialidad: string) => {
+  return api.get('/clinicas/buscar', { params: { especialidad } })
+}
+
+// Admin: crear cuenta de clínica vinculada a un usuario existente
+export const crearClinica = (data: {
+  usuarioId: number
+  nombre: string
+  rtn?: string
+  telefono?: string
+  email?: string
+  direccion?: string
+  descripcion?: string
+}) => {
+  return api.post('/clinicas', data)
+}

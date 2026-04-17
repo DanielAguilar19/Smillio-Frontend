@@ -73,14 +73,20 @@
                 </div>
                 <div>
                   <p class="text-sm text-gray-600">Clínica</p>
-                  <p class="font-bold text-gray-900">{{ cita.clinica?.nombre }}</p>
+                  <p class="font-bold text-gray-900">{{ cita.clinicaNombre }}</p>
                 </div>
                 <div>
                   <p class="text-sm text-gray-600">Servicio</p>
                   <p class="font-bold text-gray-900">{{ cita.servicio }}</p>
                 </div>
-                <div>
+                <div class="flex flex-col gap-2">
                   <Tag value="Completada" severity="success" />
+                  <Button v-if="!resenasEnviadas.has(cita.id)" label="Dejar reseña" icon="pi pi-star"
+                    text size="small" style="color: var(--color-primary)"
+                    @click="abrirResena(cita)" />
+                  <span v-else class="text-xs text-green-600 flex items-center gap-1">
+                    <i class="pi pi-check-circle"></i> Reseña enviada
+                  </span>
                 </div>
               </div>
             </div>
@@ -96,6 +102,37 @@
 
     <!-- DIALOG DE CONFIRMACIÓN -->
     <ConfirmDialog />
+
+    <!-- DIALOG DE RESEÑA -->
+    <Dialog v-model:visible="dialogResena" header="¿Cómo fue tu experiencia?" modal :style="{ width: '480px' }" :draggable="false">
+      <div class="space-y-5 py-2">
+        <p class="text-gray-600 text-sm">
+          Comparte tu experiencia en <strong>{{ citaParaResena?.clinicaNombre }}</strong>
+        </p>
+
+        <!-- RATING STARS -->
+        <div>
+          <p class="text-sm font-semibold text-gray-700 mb-2">Calificación *</p>
+          <Rating v-model="resenaForm.rating" :cancel="false" />
+          <small v-if="resenaError.rating" class="text-red-500">{{ resenaError.rating }}</small>
+        </div>
+
+        <!-- COMENTARIO -->
+        <div>
+          <p class="text-sm font-semibold text-gray-700 mb-2">Comentario (opcional)</p>
+          <Textarea v-model="resenaForm.texto" rows="4" class="w-full"
+            placeholder="Cuéntanos sobre tu visita, el trato del personal, las instalaciones..." />
+          <p class="text-xs text-gray-400 mt-1">{{ resenaForm.texto.length }}/500 caracteres</p>
+        </div>
+      </div>
+
+      <template #footer>
+        <Button label="Cancelar" text @click="dialogResena = false" />
+        <Button label="Enviar reseña" icon="pi pi-send"
+          style="background-color: var(--color-primary); border: none"
+          :loading="enviandoResena" @click="enviarResena" />
+      </template>
+    </Dialog>
   </div>
 </template>
 
@@ -107,10 +144,14 @@ import TabView from 'primevue/tabview'
 import TabPanel from 'primevue/tabpanel'
 import Tag from 'primevue/tag'
 import ConfirmDialog from 'primevue/confirmdialog'
+import Dialog from 'primevue/dialog'
+import Rating from 'primevue/rating'
+import Textarea from 'primevue/textarea'
 import { useConfirm } from 'primevue/useconfirm'
 import { useCitasStore } from '@/stores/citasStore'
 import { useAuthStore } from '@/stores/authStore'
 import { LanzarToast } from '@/utils/toastService'
+import { crearResena } from '@/api/resenas/resenasApi'
 
 const router = useRouter()
 const confirm = useConfirm()
@@ -121,7 +162,7 @@ const tabActiva = ref('proximas')
 
 const citasProximas = computed(() => {
   const hoy = new Date().toISOString().split('T')[0]
-  return citasStore.misCitas.filter(c => c.estado !== 'CANCELADA' && c.estado !== 'COMPLETADA' && c.fecha >= !hoy)
+  return citasStore.misCitas.filter(c => c.estado !== 'CANCELADA' && c.estado !== 'COMPLETADA' && c.fecha >= hoy)
     .sort((a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime())
 })
 
@@ -177,6 +218,45 @@ const reagendar = (cita: any) => {
 
 const irABusqueda = () => {
   router.push('/busqueda-clinicas')
+}
+
+// ─── Reseña post-cita ──────────────────────────────
+const dialogResena = ref(false)
+const enviandoResena = ref(false)
+const citaParaResena = ref<any>(null)
+const resenasEnviadas = ref<Set<number>>(new Set())
+const resenaForm = ref({ rating: 0, texto: '' })
+const resenaError = ref<Record<string, string>>({})
+
+const abrirResena = (cita: any) => {
+  citaParaResena.value = cita
+  resenaForm.value = { rating: 0, texto: '' }
+  resenaError.value = {}
+  dialogResena.value = true
+}
+
+const enviarResena = async () => {
+  resenaError.value = {}
+  if (!resenaForm.value.rating) {
+    resenaError.value.rating = 'Selecciona una calificación'
+    return
+  }
+  enviandoResena.value = true
+  try {
+    await crearResena({
+      pacienteId: citaParaResena.value.pacienteId,
+      clinicaId: citaParaResena.value.clinicaId,
+      rating: resenaForm.value.rating,
+      texto: resenaForm.value.texto
+    })
+    resenasEnviadas.value.add(citaParaResena.value.id)
+    dialogResena.value = false
+    LanzarToast('¡Gracias por tu reseña!', 'success')
+  } catch {
+    LanzarToast('Error al enviar la reseña', 'error')
+  } finally {
+    enviandoResena.value = false
+  }
 }
 
 onMounted(() => {

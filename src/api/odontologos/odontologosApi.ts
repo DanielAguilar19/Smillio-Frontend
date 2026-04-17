@@ -1,6 +1,12 @@
 import { api } from './../apiBase'
 
-// Registrar nuevo odontólogo
+// Step 1: Create the Usuarios account via /auth/register
+// Expects: { correo, password, tipo: 'ODONTOLOGO' } — returns { id, mensaje }
+export async function registrarCuentaOdontologo(datos: { correo: string; password: string; tipo: string }) {
+  return await api.post('/auth/register', datos)
+}
+
+// Step 2: Create the Odontologo profile linked to the Usuarios id
 export async function registrarOdontologo(datos: any) {
   return await api.post('/odontologos/registrar', datos)
 }
