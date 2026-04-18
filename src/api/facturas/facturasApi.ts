@@ -1,6 +1,7 @@
+import type { FacturaRequest, PagarFacturaRequest } from '@/interfaces/facturas/facturas'
 import { api } from '../apiBase'
 
-export async function crearFactura(datos: any) {
+export async function crearFactura(datos: FacturaRequest) {
   return await api.post('/facturas', datos)
 }
 
@@ -20,7 +21,7 @@ export async function obtenerFacturasPorEstado(clinicaId: number, estado: string
   return await api.get(`/facturas/clinica/${clinicaId}/estado/${estado}`)
 }
 
-export async function pagarFactura(id: number, datos: { metodoPago: string }) {
+export async function pagarFactura(id: number, datos: PagarFacturaRequest) {
   return await api.put(`/facturas/${id}/pagar`, datos)
 }
 

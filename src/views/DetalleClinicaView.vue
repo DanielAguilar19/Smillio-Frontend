@@ -205,7 +205,14 @@ const errorAgendamiento = ref('')
 
 const horas = ['08:00', '09:00', '10:00', '11:00', '12:00', '14:00', '15:00', '16:00', '17:00']
 
-const formulario = ref({
+interface FormularioAgendar {
+  servicio: string
+  fecha: Date | null
+  hora: string
+  notas: string
+}
+
+const formulario = ref<FormularioAgendar>({
   servicio: '',
   fecha: null,
   hora: '',
@@ -253,7 +260,7 @@ const agendar = async () => {
     await crearCita({
       usuarioId: authStore.user?.id,
       clinicaId: Number(route.params.id),
-      fecha: formulario.value.fecha.toISOString().split('T')[0],
+      fecha: formulario.value.fecha.toISOString().slice(0, 10),
       hora: formulario.value.hora,
       servicio: formulario.value.servicio,
       duracion: servicio?.duracion || 30,

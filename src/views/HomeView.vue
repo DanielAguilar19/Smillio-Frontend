@@ -237,8 +237,6 @@
         <h2 class="cta-title">Empieza a cuidar tu sonrisa hoy</h2>
         <p class="cta-text">Únete a miles de pacientes que ya agendaron con Smillio</p>
         <div class="cta-buttons">
-          <Button label="Buscar clínicas" icon="pi pi-search" class="btn-cta-white" />
-          <Button label="Registrar mi clínica" outlined class="btn-cta-outline" />
         </div>
       </div>
     </section>

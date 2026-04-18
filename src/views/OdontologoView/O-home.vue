@@ -25,6 +25,11 @@
         <ProgressSpinner />
       </div>
 
+      <div v-else-if="errorMessage" class="odo-error">
+        <i class="pi pi-exclamation-triangle"></i>
+        <p>{{ errorMessage }}</p>
+      </div>
+
       <template v-else>
         <!-- Bienvenida -->
         <div class="odo-welcome">
@@ -84,18 +89,19 @@
           <div v-else class="odo-citas-list">
             <div v-for="cita in citasProximas.slice(0, 5)" :key="cita.id" class="odo-cita-row">
               <div class="odo-cita-fecha">
-                <span class="odo-cita-dia">{{ diaSemana(cita.fecha) }}</span>
-                <span class="odo-cita-num">{{ formatFecha(cita.fecha) }}</span>
+                <span v-if="cita.fecha" class="odo-cita-dia">{{ diaSemana(cita.fecha) ?? 'Día no disponible' }}</span>
+                <span v-if="cita.fecha" class="odo-cita-num">{{ formatFecha(cita.fecha) ?? 'Fecha no disponible'
+                  }}</span>
                 <span class="odo-cita-hora">{{ cita.hora }}</span>
               </div>
               <div class="odo-cita-info">
-                <p style="font-weight:600;color:#1e293b;margin:0">{{ cita.pacienteNombre }}</p>
-                <p style="font-size:13px;color:#64748b;margin:0">{{ cita.servicio }}</p>
+                <p style="font-weight:600;color:#1e293b;margin:0">{{ cita.pacienteNombre || 'Paciente' }}</p>
+                <p style="font-size:13px;color:#64748b;margin:0">{{ cita.servicio || 'Servicio no indicado' }}</p>
                 <p v-if="cita.clinicaNombre" style="font-size:11px;color:#94a3b8;margin:0">
                   <i class="pi pi-building" style="margin-right:4px"></i>{{ cita.clinicaNombre }}
                 </p>
               </div>
-              <span :class="['odo-cita-badge', estadoCitaClass(cita.estado)]">{{ cita.estado }}</span>
+              <span :class="['odo-cita-badge', estadoCitaClass(cita.estado)]">{{ cita.estado || 'PENDIENTE' }}</span>
             </div>
           </div>
         </section>
@@ -151,30 +157,46 @@ const authStore = useAuthStore()
 const odontologoStore = useOdontologoStore()
 const citasStore = useCitasStore()
 
+type Cita = {
+  id: number | string
+  fecha?: string | null;
+  hora?: string | null;
+  estado?: string
+  pacienteNombre?: string
+  servicio?: string
+  clinicaNombre?: string
+}
+
 const loading = ref(true)
+const errorMessage = ref('')
 const odontologo = computed(() => odontologoStore.miOdontologo)
 
-const hoy = new Date().toISOString().split('T')[0]
+const toFechaISO = (fecha: Date) => fecha.toISOString().slice(0, 10)
+const hoy = toFechaISO(new Date())
 
 const finSemana = computed(() => {
   const d = new Date()
   d.setDate(d.getDate() + (6 - d.getDay()))
-  return d.toISOString().split('T')[0]
+  return toFechaISO(d)
 })
 
+const citas = computed<Cita[]>(() =>
+  Array.isArray(citasStore.misCitas) ? citasStore.misCitas : []
+)
+
 const citasActivas = computed(() =>
-  citasStore.misCitas.filter(c => c.estado !== 'CANCELADA')
+  citas.value.filter(c => c.estado !== 'CANCELADA')
 )
 const citasHoy = computed(() =>
   citasActivas.value.filter(c => c.fecha === hoy)
 )
 const citasSemana = computed(() =>
-  citasActivas.value.filter(c => c.fecha >= hoy && c.fecha <= finSemana.value)
+  citasActivas.value.filter(c => c.fecha && c.fecha >= hoy && c.fecha <= finSemana.value)
 )
 const citasProximas = computed(() =>
   citasActivas.value
-    .filter(c => c.fecha >= hoy && c.estado !== 'COMPLETADA')
-    .sort((a, b) => (a.fecha + a.hora).localeCompare(b.fecha + b.hora))
+    .filter(c => c.fecha && c.fecha >= hoy && c.estado !== 'COMPLETADA')
+    .sort((a, b) => `${a.fecha}${a.hora || ''}`.localeCompare(`${b.fecha}${b.hora || ''}`))
 )
 
 const estadoClass = computed(() => {
@@ -184,7 +206,7 @@ const estadoClass = computed(() => {
   return 'odo-estado-desempleado'
 })
 
-const estadoCitaClass = (estado: string) => ({
+const estadoCitaClass = (estado = '') => ({
   'CONFIRMADA': 'odo-badge-confirmada',
   'COMPLETADA': 'odo-badge-completada',
   'CANCELADA': 'odo-badge-cancelada',
@@ -204,14 +226,24 @@ const cerrarSesion = () => {
 
 onMounted(async () => {
   try {
+    if (!authStore.user) {
+      authStore.loadUser()
+    }
+
     if (authStore.user?.id) {
-      await odontologoStore.cargarMiOdontologo(authStore.user.id)
+      if (!odontologoStore.miOdontologo) {
+        await odontologoStore.cargarMiOdontologo(authStore.user.id)
+      }
+
       if (odontologoStore.miOdontologo?.id) {
         await citasStore.cargarCitasOdontologo(odontologoStore.miOdontologo.id)
       }
+    } else {
+      errorMessage.value = 'No se encontró una sesión activa.'
     }
   } catch (e) {
     console.error('Error cargando datos del odontólogo', e)
+    errorMessage.value = 'No se pudo cargar la información del odontólogo.'
   } finally {
     loading.value = false
   }
@@ -316,6 +348,22 @@ onMounted(async () => {
   align-items: center;
   justify-content: center;
   flex: 1;
+}
+
+.odo-error {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 14px;
+}
+
+.odo-error p {
+  margin: 0;
 }
 
 /* ── Bienvenida ──────────────────────────────────── */

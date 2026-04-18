@@ -1,15 +1,12 @@
+import type {
+  CitaRequest,
+  DelegarCitaRequest,
+  ReagendarCitaRequest,
+} from '@/interfaces/citas/citas'
 import { api } from '../apiBase'
 
 // Crear una nueva cita
-export const crearCita = (data: {
-  pacienteId: number
-  clinicaId: number
-  fecha: string
-  hora: string
-  servicio: string
-  duracion: number
-  notas?: string
-}) => {
+export const crearCita = (data: CitaRequest) => {
   return api.post('/citas', data)
 }
 
@@ -34,13 +31,14 @@ export const obtenerCitasOdontologo = (odontologoId: number) => {
 }
 
 // Reagendar cita
-export const reagendarCita = (id: number, data: { fecha: string; hora: string }) => {
+export const reagendarCita = (id: number, data: ReagendarCitaRequest) => {
   return api.put(`/citas/${id}/reagendar`, data)
 }
 
 // Delegar cita a otro odontólogo
 export const delegarCita = (id: number, nuevoOdontologoId: number) => {
-  return api.put(`/citas/${id}/delegar`, { nuevoOdontologoId })
+  const data: DelegarCitaRequest = { nuevoOdontologoId }
+  return api.put(`/citas/${id}/delegar`, data)
 }
 
 // Obtener todas las citas de una clínica

@@ -1,6 +1,6 @@
+import type { LoginRequest } from '@/interfaces/auth/auth'
 import { api } from '../apiBase'
 
-const API = import.meta.env.VITE_API
-export const login = (data: { correo: string; password: string }) => {
+export const login = (data: LoginRequest) => {
   return api.post(`/auth/login`, data)
 }

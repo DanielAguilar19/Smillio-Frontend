@@ -1,13 +1,19 @@
+import type { RegistroRequest } from '@/interfaces/auth/auth'
+import type {
+  ActualizarEstadoOdontologoRequest,
+  OdontologoRequest,
+  VerificarDocumentoRequest,
+} from '@/interfaces/odontologos/odontologos'
 import { api } from './../apiBase'
 
 // Step 1: Create the Usuarios account via /auth/register
 // Expects: { correo, password, tipo: 'ODONTOLOGO' } — returns { id, mensaje }
-export async function registrarCuentaOdontologo(datos: { correo: string; password: string; tipo: string }) {
+export async function registrarCuentaOdontologo(datos: RegistroRequest) {
   return await api.post('/auth/register', datos)
 }
 
 // Step 2: Create the Odontologo profile linked to the Usuarios id
-export async function registrarOdontologo(datos: any) {
+export async function registrarOdontologo(datos: OdontologoRequest) {
   return await api.post('/odontologos/registrar', datos)
 }
 
@@ -47,13 +53,14 @@ export async function obtenerOdontologosClinica(clinicaId: number) {
 }
 
 // Actualizar perfil de odontólogo
-export async function actualizarOdontologo(id: number, datos: any) {
+export async function actualizarOdontologo(id: number, datos: OdontologoRequest) {
   return await api.put(`/odontologos/${id}`, datos)
 }
 
 // Actualizar estado de empleo (DESEMPLEADO, BUSCA_EMPLEO, EMPLEADO)
 export async function actualizarEstadoOdontologo(id: number, estado: string) {
-  return await api.put(`/odontologos/${id}/estado`, { estado })
+  const datos: ActualizarEstadoOdontologoRequest = { estado }
+  return await api.put(`/odontologos/${id}/estado`, datos)
 }
 
 // Desactivar odontólogo
@@ -86,10 +93,8 @@ export async function verificarDocumento(
   verificado: boolean,
   notas?: string,
 ) {
-  return await api.put(`/odontologos/${odontologoId}/documentos/${documentoId}/verificar`, {
-    verificado,
-    notas,
-  })
+  const datos: VerificarDocumentoRequest = { verificado, notas }
+  return await api.put(`/odontologos/${odontologoId}/documentos/${documentoId}/verificar`, datos)
 }
 
 // Eliminar documento

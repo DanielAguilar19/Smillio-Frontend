@@ -1,3 +1,8 @@
+import type {
+  ClinicaRequest,
+  HorarioDiaRequest,
+  ServicioRequest,
+} from '@/interfaces/clinicas/clinicas'
 import { api } from '../apiBase'
 
 // Listar todas las clínicas
@@ -16,17 +21,17 @@ export const obtenerServicios = (clinicaId: number) => {
 }
 
 // Actualizar clínica
-export const actualizarClinica = (id: number, data: any) => {
+export const actualizarClinica = (id: number, data: ClinicaRequest) => {
   return api.put(`/clinicas/${id}`, data)
 }
 
 // Agregar servicio a clínica
-export const agregarServicio = (clinicaId: number, data: any) => {
+export const agregarServicio = (clinicaId: number, data: ServicioRequest) => {
   return api.post(`/clinicas/${clinicaId}/servicios`, data)
 }
 
 // Actualizar servicio
-export const actualizarServicio = (clinicaId: number, servicioId: number, data: any) => {
+export const actualizarServicio = (clinicaId: number, servicioId: number, data: ServicioRequest) => {
   return api.put(`/clinicas/${clinicaId}/servicios/${servicioId}`, data)
 }
 
@@ -36,7 +41,7 @@ export const eliminarServicio = (clinicaId: number, servicioId: number) => {
 }
 
 // Actualizar horario
-export const actualizarHorario = (clinicaId: number, horario: any[]) => {
+export const actualizarHorario = (clinicaId: number, horario: HorarioDiaRequest[]) => {
   return api.put(`/clinicas/${clinicaId}/horario`, horario)
 }
 
@@ -46,14 +51,6 @@ export const buscarClinicasPorEspecialidad = (especialidad: string) => {
 }
 
 // Admin: crear cuenta de clínica vinculada a un usuario existente
-export const crearClinica = (data: {
-  usuarioId: number
-  nombre: string
-  rtn?: string
-  telefono?: string
-  email?: string
-  direccion?: string
-  descripcion?: string
-}) => {
+export const crearClinica = (data: ClinicaRequest) => {
   return api.post('/clinicas', data)
 }

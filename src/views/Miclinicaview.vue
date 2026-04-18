@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref, watch } from 'vue'
 import { useClinicaDashboardStore } from '@/stores/clinicaDashboardStore'
 
