@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { crearCita, obtenerCitasPaciente, cancelarCita, actualizarEstadusCita } from '@/api/citas/citasApi'
+import { crearCita, obtenerCitasPaciente, obtenerCitasPorUsuario, obtenerCitasOdontologo, cancelarCita, actualizarEstadusCita, reagendarCita, delegarCita } from '@/api/citas/citasApi'
 
 export const useCitasStore = defineStore('citas', () => {
   const citaSeleccionada = ref<any>(null)
@@ -23,15 +23,53 @@ export const useCitasStore = defineStore('citas', () => {
     }
   }
 
-  const cargarMisCitas = async (pacienteId: number) => {
+  // Carga citas usando el usuario.id (el que devuelve el login)
+  const cargarMisCitas = async (usuarioId: number) => {
     loading.value = true
     try {
-      const { data } = await obtenerCitasPaciente(pacienteId)
+      const { data } = await obtenerCitasPorUsuario(usuarioId)
       misCitas.value = data || []
     } catch (e: any) {
       misCitas.value = []
     } finally {
       loading.value = false
+    }
+  }
+
+  // Carga citas de un odontólogo por su odontologo.id
+  const cargarCitasOdontologo = async (odontologoId: number) => {
+    loading.value = true
+    try {
+      const { data } = await obtenerCitasOdontologo(odontologoId)
+      misCitas.value = data || []
+    } catch (e: any) {
+      misCitas.value = []
+    } finally {
+      loading.value = false
+    }
+  }
+
+  const reagendar = async (citaId: number, fecha: string, hora: string) => {
+    try {
+      const { data } = await reagendarCita(citaId, { fecha, hora })
+      const idx = misCitas.value.findIndex(c => c.id === citaId)
+      if (idx !== -1) misCitas.value[idx] = data
+      return data
+    } catch (e: any) {
+      error.value = e.message || 'Error al reagendar cita'
+      throw e
+    }
+  }
+
+  const delegar = async (citaId: number, nuevoOdontologoId: number) => {
+    try {
+      const { data } = await delegarCita(citaId, nuevoOdontologoId)
+      const idx = misCitas.value.findIndex(c => c.id === citaId)
+      if (idx !== -1) misCitas.value[idx] = data
+      return data
+    } catch (e: any) {
+      error.value = e.message || 'Error al delegar cita'
+      throw e
     }
   }
 
@@ -63,7 +101,10 @@ export const useCitasStore = defineStore('citas', () => {
     error,
     agendar,
     cargarMisCitas,
+    cargarCitasOdontologo,
     cancelar,
     cambiarEstado,
+    reagendar,
+    delegar,
   }
 })

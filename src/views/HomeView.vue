@@ -49,7 +49,7 @@
 
           <div class="hero-buttons">
             <Button label="Buscar clínicas" icon="pi pi-search" class="btn-hero-primary" @click="irABusqueda" />
-            <Button label="Soy Clínica" outlined class="btn-hero-outline" @click="irARegistroClinica" />
+            <Button label="Soy Odontólogo" outlined class="btn-hero-outline" @click="irARegistroClinica" />
             <Button label="Soy Paciente" icon="pi pi-user" outlined class="btn-hero-outline"
               @click="RegistroPaciente()" />
           </div>
@@ -98,13 +98,13 @@
 
           <div class="step-arrow">›</div>
 
-          <div class="step-card step-card--accent">
-            <div class="step-number step-number--light">02</div>
+          <div class="step-card ">
+            <div class="step-number ">02</div>
             <div class="step-icon">
               <i class="pi pi-user"></i>
             </div>
-            <h3 class="step-title step-title--light">Seleccionar</h3>
-            <p class="step-desc step-desc--light">Elige el odontólogo que mejor se adapte a ti y tu presupuesto.</p>
+            <h3 class="step-title ">Seleccionar</h3>
+            <p class="step-desc ">Elige el odontólogo que mejor se adapte a ti y tu presupuesto.</p>
           </div>
 
           <div class="step-arrow">›</div>
@@ -127,38 +127,39 @@
         <div class="benefits-grid">
 
           <!-- Pacientes -->
-          <div class="benefit-card benefit-card--blue">
-            <div class="benefit-icon-wrap benefit-icon-wrap--blue">
+          <div class="benefit-card benefit-card--dark">
+            <div class="benefit-icon-wrap benefit-icon-wrap--dark">
               <i class="pi pi-users"></i>
             </div>
-            <h2 class="benefit-title">Para pacientes</h2>
+            <h2 class="benefit-title benefit-title--light">Para pacientes</h2>
             <ul class="benefit-list">
-              <li class="benefit-item">
+              <li class="benefit-item benefit-item--light">
                 <span class="benefit-check">
                   <i class="pi pi-check"></i>
                 </span>
                 Agenda rápida y sencilla en segundos
               </li>
-              <li class="benefit-item">
+              <li class="benefit-item benefit-item--light">
                 <span class="benefit-check">
                   <i class="pi pi-check"></i>
                 </span>
                 Clínicas y odontólogos verificados
               </li>
-              <li class="benefit-item">
+              <li class="benefit-item benefit-item--light">
                 <span class="benefit-check">
                   <i class="pi pi-check"></i>
                 </span>
                 Ahorra tiempo sin llamadas
               </li>
-              <li class="benefit-item">
+              <li class="benefit-item benefit-item--light">
                 <span class="benefit-check">
                   <i class="pi pi-check"></i>
                 </span>
                 Recordatorios de citas automáticos
               </li>
             </ul>
-            <Button @click="RegistroPaciente()" label="Buscar clínica" icon="pi pi-arrow-right" class="benefit-btn" />
+            <Button @click="RegistroPaciente()" label="Buscar clínica" icon="pi pi-arrow-right"
+              class="benefit-btn-outline" />
           </div>
 
           <!-- Odontólogos -->
@@ -295,8 +296,9 @@ function cerrarSesion() {
   background: rgba(255, 255, 255, 0.97);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid rgba(79, 123, 203, 0.12);
-  box-shadow: 0 1px 8px rgba(0,0,0,.06);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, .06);
 }
+
 .home-navbar-inner {
   max-width: 1200px;
   margin: 0 auto;
@@ -306,27 +308,32 @@ function cerrarSesion() {
   align-items: center;
   justify-content: space-between;
 }
+
 .home-navbar-brand {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
+
 .home-navbar-logo {
   height: 32px;
   width: 32px;
   object-fit: contain;
 }
+
 .home-navbar-name {
   font-size: 1.15rem;
   font-weight: 800;
   color: var(--color-primary);
   letter-spacing: 0.5px;
 }
+
 .home-navbar-actions {
   display: flex;
   align-items: center;
   gap: 0.75rem;
 }
+
 .home-nav-user {
   display: flex;
   align-items: center;
@@ -334,6 +341,7 @@ function cerrarSesion() {
   font-size: 13px;
   color: #475569;
 }
+
 .home-nav-role {
   background: var(--primary-50);
   color: var(--color-primary);
@@ -344,6 +352,7 @@ function cerrarSesion() {
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
+
 .home-nav-link {
   font-size: 13px;
   font-weight: 500;
@@ -359,10 +368,12 @@ function cerrarSesion() {
   align-items: center;
   gap: 5px;
 }
+
 .home-nav-link:hover {
   background: #f1f5f9;
   color: var(--color-primary);
 }
+
 .home-nav-btn {
   font-size: 13px;
   font-weight: 600;
@@ -378,7 +389,11 @@ function cerrarSesion() {
   gap: 5px;
   transition: opacity .15s;
 }
-.home-nav-btn:hover { opacity: 0.88; }
+
+.home-nav-btn:hover {
+  opacity: 0.88;
+}
+
 .home-nav-btn--danger {
   background: #ef4444;
 }

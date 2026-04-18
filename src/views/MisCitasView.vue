@@ -81,9 +81,8 @@
                 </div>
                 <div class="flex flex-col gap-2">
                   <Tag value="Completada" severity="success" />
-                  <Button v-if="!resenasEnviadas.has(cita.id)" label="Dejar reseña" icon="pi pi-star"
-                    text size="small" style="color: var(--color-primary)"
-                    @click="abrirResena(cita)" />
+                  <Button v-if="!resenasEnviadas.has(cita.id)" label="Dejar reseña" icon="pi pi-star" text size="small"
+                    style="color: var(--color-primary)" @click="abrirResena(cita)" />
                   <span v-else class="text-xs text-green-600 flex items-center gap-1">
                     <i class="pi pi-check-circle"></i> Reseña enviada
                   </span>
@@ -104,7 +103,8 @@
     <ConfirmDialog />
 
     <!-- DIALOG DE RESEÑA -->
-    <Dialog v-model:visible="dialogResena" header="¿Cómo fue tu experiencia?" modal :style="{ width: '480px' }" :draggable="false">
+    <Dialog v-model:visible="dialogResena" header="¿Cómo fue tu experiencia?" modal :style="{ width: '480px' }"
+      :draggable="false">
       <div class="space-y-5 py-2">
         <p class="text-gray-600 text-sm">
           Comparte tu experiencia en <strong>{{ citaParaResena?.clinicaNombre }}</strong>
@@ -128,8 +128,7 @@
 
       <template #footer>
         <Button label="Cancelar" text @click="dialogResena = false" />
-        <Button label="Enviar reseña" icon="pi pi-send"
-          style="background-color: var(--color-primary); border: none"
+        <Button label="Enviar reseña" icon="pi pi-send" style="background-color: var(--color-primary); border: none"
           :loading="enviandoResena" @click="enviarResena" />
       </template>
     </Dialog>
@@ -161,7 +160,7 @@ const authStore = useAuthStore()
 const tabActiva = ref('proximas')
 
 const citasProximas = computed(() => {
-  const hoy = new Date().toISOString().split('T')[0]
+  const hoy = new Date().toISOString().split('T')[0] || ''
   return citasStore.misCitas.filter(c => c.estado !== 'CANCELADA' && c.estado !== 'COMPLETADA' && c.fecha >= hoy)
     .sort((a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime())
 })

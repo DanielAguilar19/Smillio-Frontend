@@ -134,7 +134,7 @@ const router = createRouter({
 })
 
 // ── Navigation guard ───────────────────────────────────────────────
-/*router.beforeEach((to, _from, next) => {
+router.beforeEach((to, _from, next) => {
   const storedUser = localStorage.getItem('user')
   const user = storedUser ? JSON.parse(storedUser) : null
   const isAuthenticated = !!user
@@ -163,5 +163,4 @@ const router = createRouter({
 
   next()
 })
-*/
 export default router

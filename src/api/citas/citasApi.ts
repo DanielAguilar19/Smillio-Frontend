@@ -18,9 +18,29 @@ export const obtenerCita = (id: number) => {
   return api.get(`/citas/${id}`)
 }
 
-// Obtener todas las citas de un paciente
+// Obtener citas por paciente.id
 export const obtenerCitasPaciente = (pacienteId: number) => {
   return api.get(`/citas/paciente/${pacienteId}`)
+}
+
+// Obtener citas de un paciente usando usuario.id (el id que guarda el login)
+export const obtenerCitasPorUsuario = (usuarioId: number) => {
+  return api.get(`/citas/usuario/${usuarioId}`)
+}
+
+// Obtener citas de un odontólogo
+export const obtenerCitasOdontologo = (odontologoId: number) => {
+  return api.get(`/citas/odontologo/${odontologoId}`)
+}
+
+// Reagendar cita
+export const reagendarCita = (id: number, data: { fecha: string; hora: string }) => {
+  return api.put(`/citas/${id}/reagendar`, data)
+}
+
+// Delegar cita a otro odontólogo
+export const delegarCita = (id: number, nuevoOdontologoId: number) => {
+  return api.put(`/citas/${id}/delegar`, { nuevoOdontologoId })
 }
 
 // Obtener todas las citas de una clínica

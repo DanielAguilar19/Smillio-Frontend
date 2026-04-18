@@ -22,21 +22,14 @@
       <div class="mb-8">
         <h3 class="text-lg font-semibold text-gray-800 mb-4">Especialidades</h3>
         <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
-          <button
-            class="specialty-card"
-            :class="{ 'specialty-card-active': especialidadActiva === null }"
-            @click="seleccionarEspecialidad(null)"
-          >
+          <button class="specialty-card" :class="{ 'specialty-card-active': especialidadActiva === null }"
+            @click="seleccionarEspecialidad(null)">
             <i class="pi pi-th-large specialty-icon"></i>
             <span class="specialty-label">Todas</span>
           </button>
-          <button
-            v-for="esp in especialidades"
-            :key="esp.id"
-            class="specialty-card"
+          <button v-for="esp in especialidades" :key="esp.id" class="specialty-card"
             :class="{ 'specialty-card-active': especialidadActiva === esp.nombre }"
-            @click="seleccionarEspecialidad(esp.nombre)"
-          >
+            @click="seleccionarEspecialidad(esp.nombre)">
             <i :class="`pi ${esp.icono || 'pi-heart'} specialty-icon`"></i>
             <span class="specialty-label">{{ esp.nombre }}</span>
           </button>
@@ -48,19 +41,11 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <span class="p-input-icon-left w-full">
             <i class="pi pi-search" style="color: var(--color-primary)"></i>
-            <InputText
-              v-model="filtros.busqueda"
-              placeholder="Buscar clínica..."
-              class="w-full"
-            />
+            <InputText v-model="filtros.busqueda" placeholder="Buscar clínica..." class="w-full" />
           </span>
           <span class="p-input-icon-left w-full">
             <i class="pi pi-map-marker" style="color: var(--color-primary)"></i>
-            <InputText
-              v-model="filtros.ubicacion"
-              placeholder="Ubicación..."
-              class="w-full"
-            />
+            <InputText v-model="filtros.ubicacion" placeholder="Ubicación..." class="w-full" />
           </span>
         </div>
         <div v-if="especialidadActiva" class="mt-3 flex items-center gap-2">
@@ -82,15 +67,12 @@
 
       <!-- LISTADO DE CLÍNICAS -->
       <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div
-          v-for="clinica in clinicasFiltradas"
-          :key="clinica.id"
+        <div v-for="clinica in clinicasFiltradas" :key="clinica.id"
           class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden cursor-pointer"
-          @click="irADetalle(clinica.id)"
-        >
+          @click="irADetalle(clinica.id)">
           <!-- IMAGEN PLACEHOLDER -->
           <div class="h-40 bg-gradient-to-r"
-            :style="{backgroundImage: 'linear-gradient(135deg, var(--primary-400) 0%, var(--primary-300) 100%)'}">
+            :style="{ backgroundImage: 'linear-gradient(135deg, var(--primary-400) 0%, var(--primary-300) 100%)' }">
           </div>
 
           <!-- CONTENIDO -->
@@ -115,30 +97,16 @@
             <div v-if="clinica.servicios?.length" class="mt-4 pt-4 border-t">
               <p class="text-xs font-semibold text-gray-500 mb-2">SERVICIOS</p>
               <div class="flex flex-wrap gap-1">
-                <Tag
-                  v-for="(servicio, idx) in clinica.servicios.slice(0, 3)"
-                  :key="idx"
-                  :value="servicio.nombre"
-                  style="background-color: var(--primary-50); color: var(--color-primary)"
-                  class="text-xs"
-                />
-                <Tag
-                  v-if="clinica.servicios.length > 3"
-                  :value="`+${clinica.servicios.length - 3}`"
-                  severity="info"
-                  class="text-xs"
-                />
+                <Tag v-for="(servicio, idx) in clinica.servicios.slice(0, 3)" :key="idx" :value="servicio.nombre"
+                  style="background-color: var(--primary-50); color: var(--color-primary)" class="text-xs" />
+                <Tag v-if="clinica.servicios.length > 3" :value="`+${clinica.servicios.length - 3}`" severity="info"
+                  class="text-xs" />
               </div>
             </div>
 
             <!-- BOTÓN -->
-            <Button
-              label="Ver detalles"
-              icon="pi pi-arrow-right"
-              iconPos="right"
-              class="w-full mt-4"
-              style="background-color: var(--color-primary); border: none; color: white; font-weight: 600"
-            />
+            <Button label="Ver detalles" icon="pi pi-arrow-right" iconPos="right" class="w-full mt-4"
+              style="background-color: var(--color-primary); border: none; color: white; font-weight: 600" />
           </div>
         </div>
       </div>
@@ -148,7 +116,7 @@
         <i class="pi pi-inbox text-6xl text-gray-300 block mb-4"></i>
         <p class="text-gray-500 text-lg">No encontramos clínicas que coincidan</p>
         <Button label="Ver todas las clínicas" text @click="seleccionarEspecialidad(null)"
-          style="color: var(--color-primary); margin-top: 1rem" />
+          style="color: var(--color-primary); margin-top: 1rem; color: var(--primary-50);" />
       </div>
     </div>
   </div>
