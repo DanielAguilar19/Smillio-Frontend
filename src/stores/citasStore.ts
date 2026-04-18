@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { crearCita, obtenerCitasPaciente, cancelarCita, actualizarEstadusCita } from '@/api/citas/citasApi'
+import { crearCita, obtenerCitasPorUsuario, cancelarCita, actualizarEstadusCita } from '@/api/citas/citasApi'
 
 export const useCitasStore = defineStore('citas', () => {
   const citaSeleccionada = ref<any>(null)
@@ -23,10 +23,10 @@ export const useCitasStore = defineStore('citas', () => {
     }
   }
 
-  const cargarMisCitas = async (pacienteId: number) => {
+  const cargarMisCitas = async (usuarioId: number) => {
     loading.value = true
     try {
-      const { data } = await obtenerCitasPaciente(pacienteId)
+      const { data } = await obtenerCitasPorUsuario(usuarioId)
       misCitas.value = data || []
     } catch (e: any) {
       misCitas.value = []

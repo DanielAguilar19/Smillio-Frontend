@@ -10,12 +10,15 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
-import { ToastService } from 'primevue'
+import { ToastService, ConfirmationService, DialogService } from 'primevue'
+import Tooltip from 'primevue/tooltip'
 
 const app = createApp(App)
 
 app.use(createPinia())
 app.use(ToastService)
+app.use(ConfirmationService)
+app.use(DialogService)
 app.use(PrimeVue, {
   ripple: true,
   theme: {
@@ -41,5 +44,6 @@ app.use(PrimeVue, {
   },
 })
 app.use(router)
+app.directive('tooltip', Tooltip)
 
 app.mount('#app')

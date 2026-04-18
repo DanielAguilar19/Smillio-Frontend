@@ -2,6 +2,11 @@
   <div class="clinic-layout">
     <!-- TOP HEADER -->
     <div class="clinic-topbar">
+      <!-- Hamburger (mobile) -->
+      <button class="topbar-hamburger" @click="sidebarOpen = !sidebarOpen">
+        <i :class="sidebarOpen ? 'pi pi-times' : 'pi pi-bars'"></i>
+      </button>
+
       <div class="clinic-topbar-brand">
         <img src="/logo.png" alt="Smillio" class="topbar-logo" />
         <span class="topbar-name">Smillio</span>
@@ -10,13 +15,6 @@
         {{ store.clinica?.nombre || 'Panel de clínica' }}
       </div>
       <div class="clinic-topbar-actions">
-        <Button
-          icon="pi pi-bell"
-          text
-          rounded
-          class="topbar-btn"
-          v-tooltip="'Notificaciones'"
-        />
         <div class="topbar-user">
           <div class="topbar-avatar">
             <i class="pi pi-building" style="font-size:14px"></i>
@@ -36,14 +34,18 @@
 
     <!-- CUERPO -->
     <div class="clinic-body">
+      <!-- Overlay móvil -->
+      <div v-if="sidebarOpen" class="sidebar-overlay" @click="sidebarOpen = false"></div>
+
       <!-- SIDEBAR -->
-      <nav class="clinic-sidebar">
+      <nav class="clinic-sidebar" :class="{ 'sidebar-open': sidebarOpen }">
         <ul class="sidebar-menu">
           <li v-for="item in menuItems" :key="item.to">
             <router-link
               :to="item.to"
               class="sidebar-link"
               :class="{ 'sidebar-link-active': route.path === item.to }"
+              @click="sidebarOpen = false"
             >
               <i :class="['sidebar-icon', 'pi', item.icon]"></i>
               <span>{{ item.label }}</span>
@@ -52,11 +54,11 @@
         </ul>
 
         <div class="sidebar-footer">
-          <router-link to="/mi-clinica" class="sidebar-link" :class="{ 'sidebar-link-active': route.path === '/mi-clinica' }">
+          <router-link to="/mi-clinica" class="sidebar-link" :class="{ 'sidebar-link-active': route.path === '/mi-clinica' }" @click="sidebarOpen = false">
             <i class="sidebar-icon pi pi-cog"></i>
             <span>Mi clínica</span>
           </router-link>
-          <router-link to="/ajustes" class="sidebar-link" :class="{ 'sidebar-link-active': route.path === '/ajustes' }">
+          <router-link to="/ajustes" class="sidebar-link" :class="{ 'sidebar-link-active': route.path === '/ajustes' }" @click="sidebarOpen = false">
             <i class="sidebar-icon pi pi-sliders-h"></i>
             <span>Ajustes</span>
           </router-link>
@@ -75,7 +77,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import Button from 'primevue/button'
 import ProgressSpinner from 'primevue/progressspinner'
@@ -83,6 +85,7 @@ import { useClinicaDashboardStore } from '@/stores/clinicaDashboardStore'
 import { useAuthStore } from '@/stores/authStore'
 import { api } from '@/api/apiBase'
 
+const sidebarOpen = ref(false)
 const route = useRoute()
 const router = useRouter()
 const store = useClinicaDashboardStore()
@@ -300,5 +303,54 @@ onMounted(async () => {
   align-items: center;
   justify-content: center;
   height: 100%;
+}
+
+/* ── HAMBURGER ──────────────────────────────────── */
+.topbar-hamburger {
+  display: none;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.1rem;
+  padding: 6px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* ── OVERLAY ────────────────────────────────────── */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 15;
+}
+
+/* ── MOBILE ─────────────────────────────────────── */
+@media (max-width: 768px) {
+  .topbar-hamburger { display: flex; align-items: center; justify-content: center; }
+  .clinic-topbar-brand { width: auto; }
+  .clinic-topbar-title { display: none; }
+  .topbar-user-name { display: none; }
+
+  .sidebar-overlay { display: block; }
+
+  .clinic-sidebar {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    bottom: 0;
+    z-index: 20;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    box-shadow: 4px 0 16px rgba(0,0,0,0.15);
+  }
+  .clinic-sidebar.sidebar-open {
+    transform: translateX(0);
+  }
+
+  .clinic-content {
+    padding: 0.75rem;
+  }
 }
 </style>

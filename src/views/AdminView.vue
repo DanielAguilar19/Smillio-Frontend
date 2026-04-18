@@ -4,11 +4,14 @@
     <!-- Topbar -->
     <div class="admin-topbar">
       <div class="flex items-center gap-3">
+        <button class="admin-hamburger" @click="sidebarOpen = !sidebarOpen">
+          <i :class="sidebarOpen ? 'pi pi-times' : 'pi pi-bars'"></i>
+        </button>
         <img src="/logo.png" alt="Smillio" class="h-8 w-8 object-contain" style="filter:brightness(0) invert(1)" />
         <span class="font-bold text-white text-lg tracking-wide">Smillio Admin</span>
       </div>
       <div class="flex items-center gap-3">
-        <span class="text-sm" style="color:rgba(255,255,255,.8)">{{ authStore.user?.correo }}</span>
+        <span class="admin-email text-sm" style="color:rgba(255,255,255,.8)">{{ authStore.user?.correo }}</span>
         <button class="admin-logout" @click="cerrarSesion">
           <i class="pi pi-sign-out"></i> Salir
         </button>
@@ -16,13 +19,14 @@
     </div>
 
     <div class="admin-body">
+      <div v-if="sidebarOpen" class="admin-overlay" @click="sidebarOpen = false"></div>
 
       <!-- Sidebar -->
-      <nav class="admin-sidebar">
+      <nav class="admin-sidebar" :class="{ 'sidebar-open': sidebarOpen }">
         <div class="admin-nav-section">Panel</div>
         <button v-for="item in menuItems" :key="item.id"
           :class="['admin-nav-item', { active: seccionActiva === item.id }]"
-          @click="seccionActiva = item.id">
+          @click="seccionActiva = item.id; sidebarOpen = false">
           <i :class="['pi', item.icon]"></i>
           {{ item.label }}
         </button>
@@ -374,6 +378,7 @@ import { LanzarToast } from '@/utils/toastService'
 const router    = useRouter()
 const authStore = useAuthStore()
 
+const sidebarOpen     = ref(false)
 const seccionActiva   = ref('resumen')
 const loading         = ref(false)
 const loadingClinicas = ref(false)
@@ -619,6 +624,41 @@ onMounted(async () => {
 .admin-nav-item i { font-size: 15px; }
 .admin-nav-item:hover { background: rgba(255,255,255,.06); color: #e2e8f0; }
 .admin-nav-item.active { background: rgba(79,123,203,.25); color: #93c5fd; }
+
+/* Hamburger */
+.admin-hamburger {
+  display: none;
+  background: transparent; border: none; color: white;
+  font-size: 1.1rem; padding: 6px; cursor: pointer;
+}
+
+/* Overlay */
+.admin-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.5); z-index: 15;
+}
+
+@media (max-width: 768px) {
+  .admin-hamburger { display: flex; align-items: center; }
+  .admin-email { display: none; }
+
+  .admin-overlay { display: block; }
+
+  .admin-sidebar {
+    position: fixed;
+    top: 56px; left: 0; bottom: 0;
+    z-index: 20;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    box-shadow: 4px 0 16px rgba(0,0,0,0.3);
+  }
+  .admin-sidebar.sidebar-open { transform: translateX(0); }
+
+  .admin-content { padding: 0.75rem; }
+
+  .form-grid { grid-template-columns: 1fr !important; }
+}
 
 /* Content */
 .admin-content { flex: 1; overflow-y: auto; padding: 1.5rem; }

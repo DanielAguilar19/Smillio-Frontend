@@ -14,7 +14,7 @@ export const useClinicaDashboardStore = defineStore('clinicaDashboard', () => {
     id: null, nombre: '', rtn: '', telefono: '', email: '',
     direccion: '', web: '', descripcion: '', rating: 0,
     totalResenas: 0, doctorNombre: '', doctorEspecialidad: '',
-    servicios: [], horario: {}
+    servicios: [], horario: []
   })
   const pacientes = ref<any[]>([])
   const citas = ref<any[]>([])
@@ -162,7 +162,7 @@ export const useClinicaDashboardStore = defineStore('clinicaDashboard', () => {
     try {
       await pagarFactura(id, { metodoPago: metodo })
       const f = facturas.value.find(f => f.id === id)
-      if (f) { f.estado = 'PAGADA'; f.metodoPago = metodo }
+      if (f) { f.estado = 'pagada'; f.metodoPago = metodo }
       LanzarToast('Factura marcada como pagada', 'success')
     } catch {
       LanzarToast('Error al registrar el pago', 'error')

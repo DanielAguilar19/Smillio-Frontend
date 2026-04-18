@@ -1,15 +1,21 @@
-<script setup>
+<script setup lang="ts">
 import { ref, watch } from 'vue'
 import { useClinicaDashboardStore } from '@/stores/clinicaDashboardStore'
 
 const store = useClinicaDashboardStore()
-const clinica = ref({ ...store.clinica })
+
+const deepCopyClinica = (src: any) => ({
+  ...src,
+  horario: (src.horario || []).map((h: any) => ({ ...h }))
+})
+
+const clinica = ref(deepCopyClinica(store.clinica))
 const guardado = ref(false)
 const tabActiva = ref('general')
 
-// Sync local copy when store loads
+// Sync local copy when store loads (deep copy to avoid shared references)
 watch(() => store.clinica, (val) => {
-  clinica.value = { ...val }
+  clinica.value = deepCopyClinica(val)
 }, { deep: true })
 
 const tabs = [
@@ -34,10 +40,18 @@ const setHorarioDia = (dia: string, campo: string, valor: any) => {
   if (!clinica.value.horario) clinica.value.horario = []
   const idx = clinica.value.horario.findIndex((h: any) => h.diaSemana === dia)
   if (idx >= 0) {
-    clinica.value.horario[idx] = { ...clinica.value.horario[idx], [campo]: valor }
+    clinica.value.horario.splice(idx, 1, { ...clinica.value.horario[idx], [campo]: valor })
   } else {
-    clinica.value.horario.push({ diaSemana: dia, horaApertura: '08:00', horaCierre: '17:00', cerrado: false, [campo]: valor })
+    clinica.value.horario.push({ diaSemana: dia, horaApertura: '08:00', horaCierre: '17:00', cerrado: true, [campo]: valor })
   }
+}
+
+const guardarHorario = () => {
+  const completo = DIAS_SEMANA.map(dia => {
+    const found = (clinica.value.horario || []).find((h: any) => h.diaSemana === dia)
+    return found ?? { diaSemana: dia, horaApertura: '08:00', horaCierre: '17:00', cerrado: true }
+  })
+  store.guardarHorario(completo)
 }
 
 const guardar = async () => {
@@ -188,13 +202,13 @@ const eliminarServicio = async (id: number) => {
         </div>
       </div>
       <div style="display:flex;justify-content:flex-end;margin-top:1rem">
-        <button class="btn btn-brand" @click="store.guardarHorario(clinica.horario || [])">Guardar horario</button>
+        <button class="btn btn-brand" @click="guardarHorario">Guardar horario</button>
       </div>
     </div>
 
     <!-- Servicios -->
     <div v-if="tabActiva === 'servicios'">
-      <div class="card" style="overflow:hidden">
+      <div class="card" style="overflow-x:auto">
         <table class="data-table">
           <thead>
             <tr>

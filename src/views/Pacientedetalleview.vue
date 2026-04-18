@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { computed, ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useClinicaDashboardStore } from '@/stores/clinicaDashboardStore'
@@ -49,7 +49,7 @@ const edad = computed(() => {
   return `${años} años`
 })
 
-const estadoBadge = { confirmada: 'badge-success', pendiente: 'badge-warning', completada: 'badge-info' }
+const estadoBadge: Record<string, string> = { confirmada: 'badge-success', pendiente: 'badge-warning', completada: 'badge-info' }
 </script>
 
 <template>

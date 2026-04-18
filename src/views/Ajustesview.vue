@@ -46,7 +46,7 @@ const guardar = () => {
   <div style="max-width:800px">
 
     <!-- Header tabs vertical -->
-    <div style="display:grid;grid-template-columns:200px 1fr;gap:1.25rem">
+    <div class="ajustes-grid">
 
       <!-- Sidebar tabs -->
       <div class="card card-pad" style="padding:0.75rem">
@@ -154,8 +154,8 @@ const guardar = () => {
           <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;padding:1rem;background:var(--neutral-50);border-radius:var(--radius-md)">
             <div class="avatar avatar-lg avatar-green">AM</div>
             <div>
-              <div class="text-base font-medium">{{ store.clinica.doctor.nombre }}</div>
-              <div class="text-sm text-muted">{{ store.clinica.doctor.especialidad }}</div>
+              <div class="text-base font-medium">{{ store.clinica.doctorNombre }}</div>
+              <div class="text-sm text-muted">{{ store.clinica.doctorEspecialidad }}</div>
               <div class="text-xs text-muted" style="margin-top:3px">{{ store.clinica.email }}</div>
             </div>
             <button class="btn btn-outline btn-sm" style="margin-left:auto">Cambiar foto</button>
@@ -175,7 +175,7 @@ const guardar = () => {
             </div>
             <div class="form-group" style="grid-column:1/-1">
               <label class="form-label">Especialidad</label>
-              <input type="text" :value="store.clinica.doctor.especialidad" class="form-input" />
+              <input type="text" :value="store.clinica.doctorEspecialidad" class="form-input" />
             </div>
           </div>
           <div style="display:flex;justify-content:flex-end;margin-top:0.5rem">
@@ -262,4 +262,16 @@ const guardar = () => {
 }
 .toggle-wrap input:checked + .toggle-slider { background: var(--brand-500); }
 .toggle-wrap input:checked + .toggle-slider::before { transform: translateX(16px); }
+
+.ajustes-grid {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 1.25rem;
+}
+
+@media (max-width: 768px) {
+  .ajustes-grid {
+    grid-template-columns: 1fr;
+  }
+}
 </style>

@@ -14,90 +14,87 @@
 
     <div class="max-w-7xl mx-auto px-4 py-8">
       <!-- TABS DE ESTADO -->
-      <TabView v-model="tabActiva" class="mb-6">
-        <TabPanel value="proximas" header="Próximas" :leftIcon="upcomingCount > 0 ? 'pi pi-check' : ''">
-          <div class="space-y-4">
-            <div v-for="cita in citasProximas" :key="cita.id" class="bg-white rounded-lg shadow-sm p-6 border-l-4"
-              style="border-left-color: var(--color-primary)">
-              <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <!-- FECHA Y HORA -->
-                <div>
-                  <p class="text-sm text-gray-600">Fecha y hora</p>
-                  <p class="text-lg font-bold text-gray-900">{{ formatearFecha(cita.fecha) }}</p>
-                  <p class="text-sm font-semibold" style="color: var(--color-primary)">{{ cita.hora }}</p>
-                </div>
+      <div class="citas-tabs-bar">
+        <button :class="{ active: tabActiva === 'proximas' }" @click="tabActiva = 'proximas'">
+          <i class="pi pi-calendar"></i> Próximas
+          <span v-if="upcomingCount > 0" class="tab-badge">{{ upcomingCount }}</span>
+        </button>
+        <button :class="{ active: tabActiva === 'completadas' }" @click="tabActiva = 'completadas'">
+          <i class="pi pi-check-circle"></i> Completadas
+          <span v-if="completadasCount > 0" class="tab-badge tab-badge-green">{{ completadasCount }}</span>
+        </button>
+      </div>
 
-                <!-- CLÍNICA -->
-                <div>
-                  <p class="text-sm text-gray-600">Clínica</p>
-                  <p class="font-bold text-gray-900">{{ cita.clinica?.nombre || 'Clínica' }}</p>
-                  <p class="text-xs text-gray-600 mt-1">
-                    <i class="pi pi-map-marker"></i>
-                    {{ cita.clinica?.direccion || 'Ubicación' }}
-                  </p>
-                </div>
-
-                <!-- SERVICIO -->
-                <div>
-                  <p class="text-sm text-gray-600">Servicio</p>
-                  <p class="font-bold text-gray-900">{{ cita.servicio }}</p>
-                  <p class="text-xs text-gray-600 mt-1">{{ cita.duracion }} minutos</p>
-                </div>
-
-                <!-- ACCIONES -->
-                <div class="flex flex-col gap-2">
-                  <Button label="Reagendar" icon="pi pi-calendar" outlined size="small" @click="reagendar(cita)" />
-                  <Button label="Cancelar" icon="pi pi-trash" severity="danger" text size="small"
-                    @click="confirmarCancelacion(cita)" />
-                </div>
-              </div>
+      <!-- PRÓXIMAS -->
+      <div v-if="tabActiva === 'proximas'" class="citas-list">
+        <div v-for="cita in citasProximas" :key="cita.id" class="cita-card cita-card-proxima">
+          <div class="cita-grid">
+            <div>
+              <p class="cita-label">Fecha y hora</p>
+              <p class="cita-value-lg">{{ formatearFecha(cita.fecha) }}</p>
+              <p class="cita-hora">{{ cita.hora }}</p>
             </div>
-
-            <div v-if="citasProximas.length === 0" class="text-center py-12">
-              <i class="pi pi-calendar text-6xl text-gray-300 block mb-4"></i>
-              <p class="text-gray-500 text-lg">No tienes citas próximas</p>
-              <Button label="Agendar ahora" @click="irABusqueda"
-                style="background-color: var(--color-primary); border: none; margin-top: 1rem" />
+            <div>
+              <p class="cita-label">Clínica</p>
+              <p class="cita-value">{{ cita.clinicaNombre || 'Clínica' }}</p>
+              <p v-if="cita.clinicaDireccion" class="cita-sub">
+                <i class="pi pi-map-marker" style="font-size:10px"></i> {{ cita.clinicaDireccion }}
+              </p>
+            </div>
+            <div>
+              <p class="cita-label">Servicio</p>
+              <p class="cita-value">{{ cita.servicio }}</p>
+              <p class="cita-sub">{{ cita.duracion }} min</p>
+            </div>
+            <div class="cita-actions">
+              <Button label="Reagendar" icon="pi pi-calendar" outlined size="small" @click="reagendar(cita)" />
+              <Button label="Cancelar" icon="pi pi-trash" severity="danger" text size="small"
+                @click="confirmarCancelacion(cita)" />
             </div>
           </div>
-        </TabPanel>
+        </div>
 
-        <TabPanel value="completadas" header="Completadas" :leftIcon="completadasCount > 0 ? 'pi pi-check-circle' : ''">
-          <div class="space-y-4">
-            <div v-for="cita in citasCompletadas" :key="cita.id" class="bg-white rounded-lg shadow-sm p-6 border-l-4"
-              style="border-left-color: #10b981">
-              <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div>
-                  <p class="text-sm text-gray-600">Fecha</p>
-                  <p class="font-bold text-gray-900">{{ formatearFecha(cita.fecha) }}</p>
-                </div>
-                <div>
-                  <p class="text-sm text-gray-600">Clínica</p>
-                  <p class="font-bold text-gray-900">{{ cita.clinicaNombre }}</p>
-                </div>
-                <div>
-                  <p class="text-sm text-gray-600">Servicio</p>
-                  <p class="font-bold text-gray-900">{{ cita.servicio }}</p>
-                </div>
-                <div class="flex flex-col gap-2">
-                  <Tag value="Completada" severity="success" />
-                  <Button v-if="!resenasEnviadas.has(cita.id)" label="Dejar reseña" icon="pi pi-star"
-                    text size="small" style="color: var(--color-primary)"
-                    @click="abrirResena(cita)" />
-                  <span v-else class="text-xs text-green-600 flex items-center gap-1">
-                    <i class="pi pi-check-circle"></i> Reseña enviada
-                  </span>
-                </div>
-              </div>
+        <div v-if="citasProximas.length === 0" class="citas-empty">
+          <i class="pi pi-calendar"></i>
+          <p>No tienes citas próximas</p>
+          <Button label="Agendar ahora" @click="irABusqueda"
+            style="background-color: var(--color-primary); border: none; margin-top: 1rem" />
+        </div>
+      </div>
+
+      <!-- COMPLETADAS -->
+      <div v-if="tabActiva === 'completadas'" class="citas-list">
+        <div v-for="cita in citasCompletadas" :key="cita.id" class="cita-card cita-card-completada">
+          <div class="cita-grid">
+            <div>
+              <p class="cita-label">Fecha</p>
+              <p class="cita-value">{{ formatearFecha(cita.fecha) }}</p>
             </div>
-
-            <div v-if="citasCompletadas.length === 0" class="text-center py-12 text-gray-500">
-              <i class="pi pi-inbox text-6xl text-gray-300 block mb-4"></i>
-              Aún no tienes citas completadas
+            <div>
+              <p class="cita-label">Clínica</p>
+              <p class="cita-value">{{ cita.clinicaNombre }}</p>
+            </div>
+            <div>
+              <p class="cita-label">Servicio</p>
+              <p class="cita-value">{{ cita.servicio }}</p>
+            </div>
+            <div class="cita-actions">
+              <Tag value="Completada" severity="success" />
+              <Button v-if="!resenasEnviadas.has(cita.id)" label="Dejar reseña" icon="pi pi-star"
+                text size="small" style="color: var(--color-primary)"
+                @click="abrirResena(cita)" />
+              <span v-else class="resena-enviada">
+                <i class="pi pi-check-circle"></i> Reseña enviada
+              </span>
             </div>
           </div>
-        </TabPanel>
-      </TabView>
+        </div>
+
+        <div v-if="citasCompletadas.length === 0" class="citas-empty">
+          <i class="pi pi-inbox"></i>
+          <p>Aún no tienes citas completadas</p>
+        </div>
+      </div>
     </div>
 
     <!-- DIALOG DE CONFIRMACIÓN -->
@@ -140,8 +137,6 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import Button from 'primevue/button'
-import TabView from 'primevue/tabview'
-import TabPanel from 'primevue/tabpanel'
 import Tag from 'primevue/tag'
 import ConfirmDialog from 'primevue/confirmdialog'
 import Dialog from 'primevue/dialog'
@@ -161,7 +156,7 @@ const authStore = useAuthStore()
 const tabActiva = ref('proximas')
 
 const citasProximas = computed(() => {
-  const hoy = new Date().toISOString().split('T')[0]
+  const hoy = new Date().toISOString().split('T')[0]!
   return citasStore.misCitas.filter(c => c.estado !== 'CANCELADA' && c.estado !== 'COMPLETADA' && c.fecha >= hoy)
     .sort((a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime())
 })
@@ -263,3 +258,92 @@ onMounted(() => {
   cargarCitas()
 })
 </script>
+
+<style scoped>
+.citas-tabs-bar {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 0;
+}
+.citas-tabs-bar button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  background: transparent;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.15s;
+}
+.citas-tabs-bar button:hover { color: var(--color-primary); }
+.citas-tabs-bar button.active {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+.citas-tabs-bar button.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0; right: 0;
+  height: 2px;
+  background: var(--color-primary);
+  border-radius: 99px;
+}
+
+.tab-badge {
+  background: var(--color-primary);
+  color: white;
+  font-size: 11px;
+  padding: 1px 6px;
+  border-radius: 99px;
+}
+.tab-badge-green { background: #10b981; }
+
+.citas-list { display: flex; flex-direction: column; gap: 1rem; }
+
+.cita-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  padding: 1.25rem 1.5rem;
+  border-left: 4px solid var(--color-primary);
+}
+.cita-card-completada { border-left-color: #10b981; }
+
+.cita-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1.2fr 1fr auto;
+  gap: 1rem;
+  align-items: start;
+}
+
+.cita-label { font-size: 12px; color: #94a3b8; margin-bottom: 2px; }
+.cita-value-lg { font-size: 16px; font-weight: 700; color: #1e293b; }
+.cita-hora { font-size: 13px; font-weight: 600; color: var(--color-primary); }
+.cita-value { font-size: 14px; font-weight: 600; color: #1e293b; }
+.cita-sub { font-size: 12px; color: #94a3b8; margin-top: 2px; }
+.cita-actions { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+
+.resena-enviada { font-size: 12px; color: #10b981; display: flex; align-items: center; gap: 4px; }
+
+.citas-empty {
+  text-align: center;
+  padding: 3rem;
+  color: #94a3b8;
+}
+.citas-empty i { font-size: 3rem; display: block; margin-bottom: 0.75rem; }
+.citas-empty p { font-size: 15px; }
+
+@media (max-width: 768px) {
+  .cita-grid {
+    grid-template-columns: 1fr;
+  }
+  .cita-actions { flex-direction: row; flex-wrap: wrap; }
+}
+</style>

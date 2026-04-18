@@ -21,15 +21,17 @@ const resenasFiltradas = computed(() => {
 })
 
 const promedio = computed(() => {
+  if (!store.resenas.length) return '0.0'
   const total = store.resenas.reduce((s, r) => s + r.rating, 0)
   return (total / store.resenas.length).toFixed(1)
 })
 
 const distribucion = computed(() => {
+  const total = store.resenas.length || 1
   return [5, 4, 3, 2, 1].map(n => ({
     n,
     count: store.resenas.filter(r => r.rating === n).length,
-    pct: Math.round((store.resenas.filter(r => r.rating === n).length / store.resenas.length) * 100)
+    pct: Math.round((store.resenas.filter(r => r.rating === n).length / total) * 100)
   }))
 })
 
@@ -50,7 +52,7 @@ const enviarRespuesta = () => {
   <div>
 
     <!-- Stats -->
-    <div style="display:grid;grid-template-columns:240px 1fr;gap:1.25rem">
+    <div class="resenas-grid">
       <div class="card card-pad" style="text-align:center">
         <div class="text-muted text-xs" style="margin-bottom:0.5rem">Valoración general</div>
         <div style="font-size:52px;font-weight:600;color:var(--neutral-800);line-height:1">{{ promedio }}</div>
@@ -186,5 +188,17 @@ const enviarRespuesta = () => {
   background: var(--brand-50);
   border-left: 3px solid var(--brand-300);
   border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+.resenas-grid {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 1.25rem;
+}
+
+@media (max-width: 768px) {
+  .resenas-grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

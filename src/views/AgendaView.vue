@@ -7,9 +7,11 @@ const store = useClinicaDashboardStore()
 const vistaActiva = ref('semana')
 const semanaOffset = ref(0)
 
+const HOY = new Date().toISOString().split('T')[0]
+
 // Días de la semana actual
 const diasSemana = computed(() => {
-  const base = new Date(2025, 3, 13) // 13 abril 2025 (domingo)
+  const base = new Date()
   const lunes = new Date(base)
   lunes.setDate(base.getDate() - base.getDay() + 1 + semanaOffset.value * 7)
   return Array.from({ length: 6 }, (_, i) => {
@@ -19,7 +21,7 @@ const diasSemana = computed(() => {
       fecha: d.toISOString().split('T')[0],
       dia: d.toLocaleDateString('es', { weekday: 'short' }),
       num: d.getDate(),
-      esHoy: d.toISOString().split('T')[0] === '2025-04-13'
+      esHoy: d.toISOString().split('T')[0] === HOY
     }
   })
 })
@@ -49,13 +51,18 @@ const borderCita = (estado) => ({
 
 // Modal nueva cita
 const showModal = ref(false)
-const nuevaCita = ref({ pacienteId: '', fecha: '2025-04-13', hora: '09:00', servicio: '', notas: '' })
+const nuevaCita = ref({ pacienteId: '', fecha: HOY, hora: '09:00', servicio: '', notas: '' })
 
 const guardarCita = () => {
   if (!nuevaCita.value.pacienteId || !nuevaCita.value.servicio) return
-  store.agregarCita({ ...nuevaCita.value, estado: 'pendiente', duracion: 45 })
+  store.agregarCita({
+    ...nuevaCita.value,
+    clinicaId: store.clinicaId,
+    estado: 'pendiente',
+    duracion: 45
+  })
   showModal.value = false
-  nuevaCita.value = { pacienteId: '', fecha: '2025-04-13', hora: '09:00', servicio: '', notas: '' }
+  nuevaCita.value = { pacienteId: '', fecha: HOY, hora: '09:00', servicio: '', notas: '' }
 }
 
 const citaSeleccionada = ref(null)
@@ -105,7 +112,7 @@ const cancelarCita = (id) => {
     </div>
 
     <!-- Calendario -->
-    <div class="card" style="overflow:hidden">
+    <div class="card" style="overflow-x:auto">
       <div class="cal-grid">
 
         <!-- Header días -->

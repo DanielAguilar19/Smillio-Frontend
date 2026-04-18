@@ -25,8 +25,8 @@ const pacientesFiltrados = computed(() => {
     const q = busqueda.value.toLowerCase()
     lista = lista.filter(p =>
       `${p.nombre} ${p.apellido}`.toLowerCase().includes(q) ||
-      p.email.toLowerCase().includes(q) ||
-      p.telefono.includes(q)
+      p.email?.toLowerCase().includes(q) ||
+      p.telefono?.includes(q)
     )
   }
   if (filtroEstado.value !== 'todos') {
@@ -71,7 +71,7 @@ const estadoBadge = { activo: 'badge-success', nuevo: 'badge-info', recordatorio
     </div>
 
     <!-- Tabla -->
-    <div class="card" style="overflow:hidden">
+    <div class="card table-scroll">
       <table class="data-table">
         <thead>
           <tr>
@@ -227,4 +227,10 @@ const estadoBadge = { activo: 'badge-success', nuevo: 'badge-info', recordatorio
   font-size: 10px; padding: 1px 5px; border-radius: 99px;
 }
 .filtro-tabs button.active .count { background: var(--brand-100); color: var(--brand-700); }
+
+.table-scroll { overflow-x: auto; }
+
+@media (max-width: 768px) {
+  .filtro-tabs { flex-wrap: wrap; }
+}
 </style>

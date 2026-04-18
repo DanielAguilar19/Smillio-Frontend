@@ -77,7 +77,7 @@ const estadoBadge = { pagada: 'bg-green-100 text-green-700', pendiente: 'bg-yell
         </thead>
         <tbody>
           <tr v-for="f in facturasFiltradas" :key="f.id">
-            <td>#{{ f.id.toUpperCase() }}</td>
+            <td>#{{ f.id }}</td>
             <td>{{ f.paciente?.nombre }} {{ f.paciente?.apellido }}</td>
             <td class="font-bold">L. {{ f.monto.toLocaleString() }}</td>
             <td>
@@ -122,7 +122,7 @@ const estadoBadge = { pagada: 'bg-green-100 text-green-700', pendiente: 'bg-yell
   background: white;
   border-radius: 12px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+  overflow-x: auto;
 }
 
 th {

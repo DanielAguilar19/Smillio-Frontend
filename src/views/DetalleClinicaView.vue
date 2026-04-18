@@ -127,7 +127,7 @@
               <!-- FECHA -->
               <div>
                 <label class="text-sm font-semibold text-gray-700">Fecha *</label>
-                <Calendar
+                <DatePicker
                   v-model="formulario.fecha"
                   dateFormat="dd/mm/yy"
                   :minDate="new Date()"
@@ -181,9 +181,8 @@
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import Button from 'primevue/button'
-import InputText from 'primevue/inputtext'
 import Select from 'primevue/select'
-import Calendar from 'primevue/calendar'
+import DatePicker from 'primevue/datepicker'
 import Textarea from 'primevue/textarea'
 import Message from 'primevue/message'
 import ProgressSpinner from 'primevue/progressspinner'
@@ -253,7 +252,7 @@ const agendar = async () => {
     await crearCita({
       usuarioId: authStore.user?.id,
       clinicaId: Number(route.params.id),
-      fecha: formulario.value.fecha.toISOString().split('T')[0],
+      fecha: (formulario.value.fecha as Date).toISOString().split('T')[0]!,
       hora: formulario.value.hora,
       servicio: formulario.value.servicio,
       duracion: servicio?.duracion || 30,

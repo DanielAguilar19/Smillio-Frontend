@@ -1,30 +1,27 @@
 <script setup lang="ts">
+  import { ref } from 'vue'
   import Button from 'primevue/button'
   import Divider from 'primevue/divider'
   import Panel from 'primevue/panel'
   import DataTable from 'primevue/datatable'
   import Column from 'primevue/column'
-  import Select from 'primevue/select'; 
-  import InputText  from 'primevue/inputtext'
-
-  const searchQuery = ref('');
-
+  import Select from 'primevue/select'
+  import InputText from 'primevue/inputtext'
   import { useNavStore } from '@/stores/navigation'
-  const nav = useNavStore();
 
-  import { ref } from 'vue'
-    const selectedClinica = ref();
-    const clinicas = ref([
-      { name: 'Clínica Santa Fe', code: 'SF' },
-      { name: 'Clínica Centro', code: 'CC' }
-    ]);
-
-    const selectedEstados = ref();
-    const estados = ref([
-      { name: 'Completada', code: 'CO' },
-      { name: 'Pendiente', code: 'PE' },
-      { name: 'Urgente', code: 'UR' }
-    ]);
+  const nav = useNavStore()
+  const searchQuery = ref('')
+  const selectedClinica = ref()
+  const clinicas = ref([
+    { name: 'Clínica Santa Fe', code: 'SF' },
+    { name: 'Clínica Centro', code: 'CC' }
+  ])
+  const selectedEstados = ref()
+  const estados = ref([
+    { name: 'Completada', code: 'CO' },
+    { name: 'Pendiente', code: 'PE' },
+    { name: 'Urgente', code: 'UR' }
+  ])
 </script>
 
 <template>
